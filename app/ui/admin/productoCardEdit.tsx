@@ -13,25 +13,26 @@ async function ProductEdit({producto}: ProductItemProps){
     
         return (
             /*agregar mapeo para todos los productos, o una cantidad. */
-            <div className="bg-white rounded-lg overflow-hidden shadow-md dark:bg-gray-800 dark:text-gray-200">
-                    <Link className="block" href={`./${producto?.id}/infoEditProducto`}>
+            <Link className="block transition ease-in-out hover:-translate-y-1 hover:scale-110" href={`./${producto?.id}/infoEditProducto`}>
+            <div className="grid grid-cols-[80px_1fr_80px] items-center gap-4 bg-gray-950  rounded-md">
                         <Image
                             alt={producto.title}
-                            className="w-full h-60 object-cover"
-                            height="300"
+                            className="rounded-md"
+                            height="80"
                             src={producto.poster}
                             style={{
-                                aspectRatio: "400/300",
+                                aspectRatio: "80/80",
                                 objectFit: "cover",
-                            }}
-                        width="400"
+                              }}
+                        width="80"
                         />
-                    </Link>
-                <div className="p-4 space-y-2 max-h-30 hidden sm:block">
-                    <h3 className="font-semibold text-lg">{producto.title}</h3>
-                    <p className="text-gray-500 dark:text-gray-400">{producto.genere} - {producto.year}</p>
+                    
+                <div className="max-h-30 sm:block">
+                    <h3 className="text-white font-semibold text-lg">{producto.title}</h3>
+                    <h1 className="text-gray-300 dark:text-gray-400">{producto.genere} - {producto.year}</h1>
                 </div>
             </div>
+            </Link>
         )
 }
 
@@ -61,7 +62,7 @@ export default async function ProductoCardEdit({
     if(data.length === 0) return <div className="text-gray-300 w-full justify-center flex text-lg">No se encontraron resultados</div>
     else{
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-6">
+        <div className="grid grid-cols-1 max-w-6xl mx-auto gap-4">
             {
             data.map(async (Producto) => (
                 <ProductEdit key={Producto.title} producto={Producto}/>

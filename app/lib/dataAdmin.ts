@@ -32,18 +32,18 @@ export async function getAllTypeProductos(type :string) {
     }
   }
   
-export async function updateMovie(movieData: Producto) {
+export async function updateMovie(productoData: Producto) {
     noStore();
-    console.log(movieData);
+    console.log(productoData);
     try {
       const update = await sql<Producto>`
       UPDATE productos
-      SET year = ${movieData.year}, poster = ${movieData.poster}, runtime = ${movieData.runtime},
-          genere = ${movieData.genere}, director = ${movieData.director}, actors = ${movieData.actors},
-          price = ${movieData.price} , disable = ${movieData.disable}
-      WHERE id = ${movieData.id};
+      SET year = ${productoData.year}, poster = ${productoData.poster}, runtime = ${productoData.runtime},
+          genere = ${productoData.genere}, director = ${productoData.director}, actors = ${productoData.actors},
+          price = ${productoData.price} , disable = ${productoData.disable}
+      WHERE id = ${productoData.id};
     `;
-    console.log("Movie updated: " + movieData.title);
+    console.log("Movie updated: " + productoData.title);
     return update;
     } catch (error) {
       console.error('Database Error:', error);
@@ -131,3 +131,21 @@ export async function totalPages(type: string) {
       throw new Error('Failed to delete the product.');
     }
   }
+
+export async function addProduct(productoData: Producto) {
+    noStore();
+    console.log(productoData);
+    try {
+      const insert = await sql<Producto>`
+      INSERT INTO productos
+      (title, year, poster, plot, runtime, genere, director, writer, actors, totalseasons, disable, price, type)
+      VALUES
+      (${productoData.title}, ${productoData.year}, ${productoData.poster}, ${productoData.plot}, ${productoData.runtime}, ${productoData.genere}, ${productoData.director}, ${productoData.writer}, ${productoData.actors}, ${productoData.totalseasons}, ${productoData.disable}, ${productoData.price}, ${productoData.type});
+    `;
+    console.log("Producto added: " + productoData.title);
+    return insert;
+    } catch (error) {
+      console.error('Database Error:', error);
+      return error;
+    }
+}

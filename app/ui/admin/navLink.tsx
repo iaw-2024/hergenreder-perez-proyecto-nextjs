@@ -29,10 +29,10 @@ export default function NavLink() {
                         <Link className="hover:text-[#4b6bfb] transition-colors" href="#">
                             Transactions
                         </Link>
-                        <Link className="hover:text-[#4b6bfb] transition-colors" href="#">
+                        <Link className="hover:text-[#4b6bfb] transition-colors" href="/admin/addMovie">
                             Add Movie
                         </Link>
-                        <Link className="hover:text-[#4b6bfb] transition-colors" href="#">
+                        <Link className="hover:text-[#4b6bfb] transition-colors" href="/admin/addSerie">
                             Add Series
                         </Link>
                     </div>

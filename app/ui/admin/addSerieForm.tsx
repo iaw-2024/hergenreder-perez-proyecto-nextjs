@@ -1,18 +1,30 @@
 'use client';
 import Swal from 'sweetalert2';
+
 import { useState } from 'react';
 import { Producto } from "@/app/lib/definitions";
-import { updateMovie } from "@/app/lib/dataAdmin"; 
-import { updateSerie } from "@/app/lib/dataAdmin";
+import { addProduct } from "@/app/lib/dataAdmin";
 import { useRouter } from 'next/navigation';
-import {ButtonDelete} from '../button';
 
-interface ProductFormProps {
-  movieData: Producto;
-}
+export default function AddSerieForm() {
+  const movieData: Producto = {
+    id: "",
+    type: "pelicula",
+    title: "",
+    plot: "",
+    year: 0,
+    poster: "",
+    runtime: "",
+    genere: "",
+    director: "",
+    writer: "",
+    actors: "",
+    totalseasons: 0,
+    price: 0,
+    disable: false
+  }
 
-export default function ProductForm({ movieData }: ProductFormProps) {
-  const [formData, setFormData] = useState({ ...movieData });
+  const [formData, setFormData] = useState(movieData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
@@ -27,8 +39,8 @@ export default function ProductForm({ movieData }: ProductFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     //e.preventDefault();
     try {
-      formData?.type === "pelicula" ? await updateMovie(formData): await updateSerie(formData);
-     
+      await addProduct(formData);
+
       router.push('/admin/movies');
     } catch (error) {
       console.error('Database Error:', error);
@@ -41,7 +53,6 @@ export default function ProductForm({ movieData }: ProductFormProps) {
       <div>
         <div className='flex items-center justify-between pb-4'>
           <h2 className="text-xl font-bold">{movieData.type}</h2>
-          <ButtonDelete id={movieData.id} type={movieData.type}/>
         </div>
         <form onSubmit={handleSubmit} className="bg-[#0F1A2F] rounded-lg p-6 space-y-4">
           <div>
@@ -52,7 +63,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="title"
               type="text"
-              value={formData.title}
+              required
               onChange={handleChange}
             />
           </div>
@@ -65,7 +76,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
                 className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                 id="year"
                 type="number"
-                value={formData.year}
+                required
                 onChange={handleChange}
               />
             </div>
@@ -78,7 +89,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="poster"
               type="text"
-              value={formData.poster}
+              required
               onChange={handleChange}
             />
           </div>
@@ -89,7 +100,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
             <textarea
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] resize-none dark:border-gray-800"
               id="plot"
-              value={formData.plot}
+              required
               onChange={handleChange}
             />
           </div>
@@ -101,11 +112,11 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="runtime"
               type="text"
-              value={formData.runtime}
+              required
               onChange={handleChange}
             />
           </div>
-          {formData.type === "serie" ? (
+          
               <div>
                 <label className="block font-medium mb-1" htmlFor="totalseasons">
                   Seasons
@@ -114,12 +125,10 @@ export default function ProductForm({ movieData }: ProductFormProps) {
                   className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                   id="totalseasons"
                   type="number"
-                  value={formData.totalseasons}
+                  required
                   onChange={handleChange}
                 />
               </div>
-            ) : null          
-          }
           <div>
             <label className="block font-medium mb-1" htmlFor="genere">
               Genere
@@ -128,24 +137,10 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="genere"
               type="text"
-              value={formData.genere}
+              required
               onChange={handleChange}
             />
           </div>
-          {formData?.type === "pelicula" ? (
-                <div>
-                <label className="block font-medium mb-1" htmlFor="director">
-                  Director
-                </label>
-                <input
-                  className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
-                  id="director"
-                  type="text"
-                  value={formData.director}
-                  onChange={handleChange}
-                />
-              </div>
-            ) :
                 <div>
                 <label className="block font-medium mb-1" htmlFor="director">
                   Writer 
@@ -154,11 +149,10 @@ export default function ProductForm({ movieData }: ProductFormProps) {
                   className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                   id="writer"
                   type="text"
-                  value={formData.writer}
+                  required
                   onChange={handleChange}
                 />
               </div>  
-          }
           <div>
             <label className="block font-medium mb-1" htmlFor="actors">
               Actors
@@ -167,7 +161,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="actors"
               type="text"
-              value={formData.actors}
+              required
               onChange={handleChange}
             />
           </div>
@@ -180,7 +174,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
                 className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                 id="price"
                 type="number"
-                value={formData.price}
+                required
                 onChange={handleChange}
               />
             </div>
@@ -193,11 +187,11 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               <select
                 className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                 id="disable"
-                defaultValue={formData.disable.valueOf().toString()}
+                required
                 onChange={handleChange}
               >
-                <option value="true">true</option>
                 <option value="false">false</option>
+                <option value="true">true</option>
               </select>
             </div>
           </div>

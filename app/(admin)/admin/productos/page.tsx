@@ -1,6 +1,6 @@
 import ProductCardEdit from "@/app/ui/admin/productoCardEdit";
 import Pagination from '@/app/ui/pagination';
-import { ProductCardSkeleton } from "@/app/ui/skeletons"
+import { ProductoCardEditSkeleton } from "@/app/ui/admin/skeletons"
 import { Suspense } from 'react';
 import { fetchFilmsTotalPages } from '@/app/lib/dataFilms';
 
@@ -18,7 +18,7 @@ export default async function Component({
 
   return (
     <div>
-      <Suspense key={query + currentPage} fallback={<ProductCardSkeleton />}>
+      <Suspense key={query + currentPage} fallback={<ProductoCardEditSkeleton />}>
         <ProductCardEdit type="peliculas" query={query} currentPage={currentPage}/>
       </Suspense>
       <div className="mt-5 flex w-full justify-center">

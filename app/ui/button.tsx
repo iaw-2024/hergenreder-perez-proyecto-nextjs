@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 import clsx from 'clsx';
 import { deleteToCart, addToCart, estaPeliculaEnCarrito } from "@/app/lib/actions";
 import {deleteToStorage} from "@/app/lib/dataAdmin";
@@ -44,28 +44,34 @@ export async function ButtonAddProducto({id}:{id:string}){
   }
 }
 
-async function confirmDelete(id: string, type: string){
-  var resultado = window.confirm('Estas seguro de eliminar el producto?');
-  if (resultado) {
-    try {
-      await deleteToStorage(id);
-      window.alert('Producto eliminado con éxito');
-      window.location.assign('/admin');
-    } catch (error) {
-      return {
-        mensage: 'Database Error: Failed to Delete product.',
-    };
-    }
-  }
-}
-
 export async function ButtonDelete({id, type} : {id : string, type: string}){
-  const deleteProduct = confirmDelete.bind(null, id, type);
-  return (
-    <form action={deleteProduct}>
-      <button className="flex h-10 items-center rounded-lg bg-red-500 px-4 text-sm font-medium text-white transition-colors hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 aria-disabled:cursor-not-allowed aria-disabled:opacity-50">
-        delete
-      </button>
-    </form>
-  )
+  
+  const handleClick = () => Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      color: "#FFFFFF",
+      background: "#0F1A2F"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteToStorage(id);
+          Swal.fire({title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"});
+          window.location.assign('/admin');
+        }catch(error){
+          Swal.fire("Database Error: Failed to Delete product.", "", "error");
+        }
+      } 
+    })
+    return (
+        <button onClick={handleClick} className="flex h-10 items-center rounded-lg bg-red-500 px-4 text-sm font-medium text-white transition-colors hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 aria-disabled:cursor-not-allowed aria-disabled:opacity-50">
+          delete
+        </button>
+    )
 }
