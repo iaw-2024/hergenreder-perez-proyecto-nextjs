@@ -14,7 +14,7 @@ export default async function Component({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchProductosTotalPages(query, "series");
+  const totalPages = await fetchProductosTotalPages(query, "serie");
 
   return (
     <div>

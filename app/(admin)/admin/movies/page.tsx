@@ -19,7 +19,7 @@ export default async function Component({
   return (
     <div>
       <Suspense fallback={<ProductoCardEditSkeleton />}>
-        <ProductoCardEdit type="movies" query={query} currentPage={currentPage}/>
+        <ProductoCardEdit type="pelicula" query={query} currentPage={currentPage}/>
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />

@@ -50,10 +50,10 @@ export default async function ProductoCardEdit({
     let data;
 
     switch(type){
-        case "series":
+        case "serie":
             data = await fetchFilteredSeries(query, currentPage);
             break;
-        case "movies":
+        case "pelicula":
             data = await fetchFilteredFilms(query, currentPage);
             break;
         default:
