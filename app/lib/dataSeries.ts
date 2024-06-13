@@ -18,7 +18,7 @@ export async function fetchseries() {
   
        console.log('Fetching revenue data...');
   
-      const data = await sql<Producto>`SELECT * FROM series WHERE disable = false`;
+      const data = await sql<Producto>`SELECT * FROM productos WHERE disable = false AND type = 'serie'`;
   
   
       return data.rows;
@@ -39,7 +39,7 @@ export async function fetchseries() {
   
        console.log('Fetching revenue data...'+serie);
   
-      const data = await sql<Producto>`SELECT * FROM series WHERE title ILIKE ${serie} AND disable = false`;
+      const data = await sql<Producto>`SELECT * FROM productos WHERE title ILIKE ${serie} AND disable = false AND type = 'serie'`;
       data.rows[0].type="serie";
 
       return data.rows[0];
@@ -53,8 +53,8 @@ export async function fetchSeriesForGrid(){
   noStore();
   try{
     const data = await sql<Producto>`SELECT *
-    FROM series
-    WHERE disable = false
+    FROM productos
+    WHERE disable = false AND type = 'serie'
     ORDER BY year DESC
     LIMIT 3;`
     return data.rows;
@@ -107,9 +107,9 @@ export async function fetchFilteredSeriess(
     const series = await sql<Producto>`
       SELECT
         *
-      FROM series
+      FROM productos
       WHERE
-        disable = false AND (
+        disable = false AND type = 'serie' AND (
           title ILIKE ${`%${query}%`} OR
           year ILIKE ${`%${query}%`} OR
           actors ILIKE ${`%${query}%`} OR

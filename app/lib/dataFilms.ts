@@ -38,7 +38,7 @@ export async function fetchPeliculas() {
   
        console.log('Fetching revenue data...'+pelicula);
   
-      const data = await sql<Producto>`SELECT * FROM peliculas WHERE title ILIKE ${pelicula} AND disable = false`;
+      const data = await sql<Producto>`SELECT * FROM productos WHERE title ILIKE ${pelicula} AND disable = false AND type = 'pelicula'`;
       data.rows[0].type="pelicula";
 
       return data.rows[0];
@@ -52,8 +52,8 @@ export async function fetchFilmsForGrid(){
   noStore();
   try{
     const data = await sql<Producto>`SELECT *
-    FROM peliculas
-    WHERE disable = false
+    FROM productos
+    WHERE disable = false AND type = 'pelicula'
     ORDER BY year DESC
     LIMIT 3;`
     return data.rows;
