@@ -17,7 +17,7 @@ export async function fetchPeliculas() {
   
        console.log('Fetching revenue data...');
   
-      const data = await sql<Producto>`SELECT * FROM peliculas WHERE disable = false`;
+      const data = await sql<Producto>`SELECT * FROM productos WHERE disable = false AND type = 'pelicula'`;
   
   
       return data.rows;
