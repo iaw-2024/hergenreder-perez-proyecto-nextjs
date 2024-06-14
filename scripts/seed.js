@@ -1,84 +1,13 @@
 const { db } = require('@vercel/postgres');
 
-const series = [
-    "Breaking Bad",
-    "Game of Thrones",
-    "The Wire",
-    "Stranger Things",
-    "The Crown",
-    "Friends",
-    "The Office",
-    "Sherlock",
-    "The Mandalorian",
-    "The Witcher",
-    "Fargo",
-    "True Detective",
-    "Westworld",
-    "Mindhunter",
-    "Black Mirror",
-    "The Handmaid's Tale",
-    "The Sopranos",
-    "Better Call Saul",
-    "Mad Men",
-    "House of Cards",
-    "Ozark",
-    "Peaky Blinders",
-    "The Boys",
-    "The Umbrella Academy",
-    "Succession",
-    "Euphoria",
-    "Chernobyl",
-    "Killing Eve",
-    "Brooklyn Nine-Nine",
-    "Parks and Recreation"
-  ];
+const bcrypt = require('bcrypt');
 
-const peliculas = [
-    "The Godfather",
-    "Titanic",
-    "Pulp Fiction",
-    "The Dark Knight",
-    "The Lord of the Rings: The Fellowship of the Ring",
-    "Star Wars: Episode IV - A New Hope",
-    "The Silence of the Lambs",
-    "The Lion King",
-    "Gladiator",
-    "Back to the Future",
-    "The Godfather: Part II",
-    "Saving Private Ryan",
-    "The Shawshank Redemption",
-    "The Dark Knight Rises",
-    "The Lord of the Rings: The Return of the King",
-    "The Lord of the Rings: The Two Towers",
-    "Forrest Gump",
-    "The Avengers",
-    "Jurassic Park",
-    "Avatar",
-    "The Great Gatsby",
-    "Inglourious Basterds",
-    "The Departed",
-    "The Wolf of Wall Street",
-    "The Grand Budapest Hotel",
-    "Gone with the Wind",
-    "Casablanca",
-    "The Wizard of Oz",
-    "Psycho",
-    "The Shining",
-    "Goodfellas",
-    "Fight Club",
-    "Inception",
-    "The Usual Suspects",
-    "The Terminator",
-    "Alien",
-    "The Godfather: Part III",
-    "The Green Mile",
-    "The Sixth Sense",
-    "Schindler's List",
-    "The Matrix",
-    "Interstellar"
-  ];
-
-
+const {
+    peliculas,
+    series,
+    users,
+} = require('../app/lib/placeholder-data.js');
+  
   async function crearTablaProducto(client) {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -205,11 +134,49 @@ async function fetchSerie(titulo){
     }
 }
 
+async function seedUsers(client) {
+    try {
+      await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+      const createTable = await client.sql`
+        CREATE TABLE IF NOT EXISTS users (
+          id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+          email TEXT NOT NULL UNIQUE,
+          password TEXT NOT NULL
+        );
+      `;
+  
+      console.log(`Created "users" table`);
+  
+      // Insert data into the "users" table
+      const insertedUsers = await Promise.all(
+        users.map(async (user) => {
+          const hashedPassword = await bcrypt.hash(user.password, 10);
+          return client.sql`
+          INSERT INTO users (email, password)
+          VALUES (${user.email}, ${hashedPassword})
+          ON CONFLICT (id) DO NOTHING;
+        `;
+        }),
+      );
+  
+      console.log(`Seeded ${insertedUsers.length} users`);
+  
+      return {
+        createTable,
+        users: insertedUsers,
+      };
+    } catch (error) {
+      console.error('Error seeding users:', error);
+      throw error;
+    }
+  }
+
 async function main() {
     const client = await db.connect();
     
     await crearTablaProducto(client);
     await seedProductos(client);
+    await seedUsers(client);
     await client.end();
   }
   

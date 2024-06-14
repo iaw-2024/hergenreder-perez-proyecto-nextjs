@@ -1,36 +1,35 @@
-import { totalFilms } from "@/app/lib/dataFilms";
-import { totalSeries } from "@/app/lib/dataSeries"
+import { totalMovies, totalSeries} from "@/app/lib/dataAdmin";
 
 export async function AdminPage() {
   const countSeries = await totalSeries();
-  const countFilms = await totalFilms();
+  const countMovies = await totalMovies();
 
   return (
       <div className="flex flex-col min-h-screen text-white">
         <main className="flex-1 py-8 px-6">
           <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-800 rounded-lg shadow-md p-6">
+            <div className="bg-gray-950 rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Total Movies</h2>
-                <span className="text-2xl font-bold">{countFilms}</span>
+                <span className="text-2xl font-bold">{countMovies}</span>
               </div>
               <p className="text-gray-400">This is the total number of movies in your library.</p>
             </div>
-            <div className="bg-gray-800 rounded-lg shadow-md p-6">
+            <div className="bg-gray-950 rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Total Series</h2>
                 <span className="text-2xl font-bold">{countSeries}</span>
               </div>
               <p className="text-gray-400">This is the total number of series in your library.</p>
             </div>
-            <div className="bg-gray-800 rounded-lg shadow-md p-6">
+            <div className="bg-gray-950 rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Total Transactions</h2>
                 <span className="text-2xl font-bold">1,234</span>
               </div>
               <p className="text-gray-400">This is the total number of transactions in your library.</p>
             </div>
-            <div className="bg-gray-800 rounded-lg shadow-md p-6 col-span-1 md:col-span-3">
+            <div className="bg-gray-950 rounded-lg shadow-md p-6 col-span-1 md:col-span-3">
               <h2 className="text-xl font-bold mb-4">Recent Transactions</h2>
               <div className="overflow-x-auto">
                 <table className="w-full table-auto">

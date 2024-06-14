@@ -1,7 +1,7 @@
 import Pagination from '@/app/ui/pagination';
 import { ProductoCardEditSkeleton } from "@/app/ui/admin/skeletons"
 import { Suspense } from 'react';
-import { fetchFilmsTotalPages } from '@/app/lib/dataFilms';
+import { fetchProductsPages } from '@/app/lib/dataAdmin';
 import ProductoCardEdit from "@/app/ui/admin/productoCardEdit";
 
 export default async function Component({
@@ -14,7 +14,7 @@ export default async function Component({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchFilmsTotalPages(query);
+  const totalPages = await fetchProductsPages("pelicula", query);
 
   return (
     <div>

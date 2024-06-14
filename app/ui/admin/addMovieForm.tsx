@@ -1,6 +1,5 @@
 'use client';
 import Swal from 'sweetalert2';
-
 import { useState } from 'react';
 import { Producto } from "@/app/lib/definitions";
 import { addProduct } from "@/app/lib/dataAdmin";
@@ -37,14 +36,29 @@ export default function AddMovieForm() {
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
-        //e.preventDefault();
-        try {
+        e.preventDefault();
+        const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
+    
+        if (!urlPattern.test(formData.poster)) {
+          Swal.fire({
+            text:"Invalid image URL", 
+            icon:"error",
+            color: "#FFFFFF",
+            background: "#0F1A2F"
+            });
+        }else{
+          console.log("handle submit"+e.target);
+          try {
             await addProduct(formData);
-        } catch (error) {
+            Swal.fire({text:"Product Added", icon:"success", color: "#FFFFFF", background: "#0F1A2F"}).then(() => {
+                window.location.assign('/admin');
+            });
+          } catch (error) {
             console.error('Database Error:', error);
             Swal.fire("Database Error: Failed to Update product.", "", "error");
+          }
         }
-    };
+      };
 
     return (
         <div className="text-white bg-gray-950 shadow-sm rounded-lg p-6 w-full">
@@ -86,7 +100,7 @@ export default function AddMovieForm() {
                         <input
                             className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                             id="poster"
-                            type="text"
+                            type="url"
                             required
                             onChange={handleChange}
                         />

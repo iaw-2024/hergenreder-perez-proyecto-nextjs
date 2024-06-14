@@ -3,6 +3,7 @@ import { PowerIcon } from '@heroicons/react/24/outline';
 import  NavLink from "./navLink";
 import Search from "../search"
 import {Suspense} from "react";
+import Swal from "sweetalert2";
 
 export default function AdminPage() {
   
@@ -17,8 +18,8 @@ export default function AdminPage() {
             </div>
             <form
         action={async () => {
-          'use server';
-          await signOut();
+              'use server';
+              await signOut();
         }}
         >
           <button className="flex h-[48px] w-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-red-500 md:flex-none md:justify-start md:p-2 md:px-3">

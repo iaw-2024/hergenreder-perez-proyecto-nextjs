@@ -1,5 +1,13 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Store',
+    default: 'Store',
+  }
+}
 
 const inter = Inter({
   subsets: ['latin'],

@@ -1,7 +1,6 @@
 import { ButtonAddProducto } from "@/app/ui/button"
 import Link from "next/link"
-import {fetchFilteredFilms } from "@/app/lib/dataFilms"
-import { fetchFilteredSeries } from "@/app/lib/dataSeries"
+import {fetchFilteredTypeProductos} from "@/app/lib/dataAdmin"
 import { Producto } from "@/app/lib/definitions"
 import Image from "next/image"
 
@@ -63,20 +62,7 @@ export default async function ProductoCard({
     currentPage: number;
   }) 
  {
-    let data;
-
-    switch(type){
-        case "series":
-            data = await fetchFilteredSeries(query, currentPage);
-            break;
-        case "movies":
-            data = await fetchFilteredFilms(query, currentPage);
-            break;
-        default:
-            data = await fetchFilteredFilms(query, currentPage);
-            data = data.concat(await fetchFilteredSeries(query, currentPage));
-            break;
-    }
+    const data = await fetchFilteredTypeProductos(type, query, currentPage);
     
     if(data.length === 0) return <div className="text-gray-300 w-full justify-center flex text-lg">No se encontraron resultados</div>
     else{

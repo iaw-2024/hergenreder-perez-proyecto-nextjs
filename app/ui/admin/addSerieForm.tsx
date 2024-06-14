@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 export default function AddSerieForm() {
   const movieData: Producto = {
     id: "",
-    type: "pelicula",
+    type: "serie",
     title: "",
     plot: "",
     year: 0,
@@ -37,14 +37,21 @@ export default function AddSerieForm() {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    //e.preventDefault();
-    try {
-      await addProduct(formData);
+    e.preventDefault();
+    const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
 
-      router.push('/admin/movies');
-    } catch (error) {
-      console.error('Database Error:', error);
-      Swal.fire("Database Error: Failed to Update product.", "", "error");
+    if (!urlPattern.test(formData.poster)) {
+      Swal.fire("Invalid image URL", "", "error");
+    }else{
+      console.log("handle submit"+e.target);
+      try {
+        await addProduct(formData);
+  
+        router.push('/admin/movies');
+      } catch (error) {
+        console.error('Database Error:', error);
+        Swal.fire("Database Error: Failed to Update product.", "", "error");
+      }
     }
   };
 

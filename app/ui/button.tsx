@@ -51,8 +51,8 @@ export async function ButtonDelete({id, type} : {id : string, type: string}){
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
       color: "#FFFFFF",
       background: "#0F1A2F"
@@ -62,10 +62,12 @@ export async function ButtonDelete({id, type} : {id : string, type: string}){
           await deleteToStorage(id);
           Swal.fire({title: "Deleted!",
             text: "Your file has been deleted.",
-            icon: "success"});
-          window.location.assign('/admin');
+            icon: "success",
+            color: "#FFFFFF",
+            background: "#0F1A2F"
+          }).then(()=>{window.location.assign('/admin')});
         }catch(error){
-          Swal.fire("Database Error: Failed to Delete product.", "", "error");
+          Swal.fire({text:"Database Error: Failed to Delete product.",icon:"error", color: "#FFFFFF", background: "#0F1A2F"});
         }
       } 
     })

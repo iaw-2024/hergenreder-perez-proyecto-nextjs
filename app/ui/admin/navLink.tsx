@@ -52,16 +52,16 @@ export default function NavLink() {
                                 <Link className="hover:text-blue-500 transition-colors" href="/admin/movies">
                                     Movies
                                 </Link>
-                                <Link className="hover:text-blue-500 transition-colors" href="#">
+                                <Link className="hover:text-blue-500 transition-colors" href="/admin/series">
                                     Series
                                 </Link>
                                 <Link className="hover:text-blue-500 transition-colors" href="#">
                                     Transactions
                                 </Link>
-                                <Link className="hover:text-blue-500 transition-colors" href="#">
+                                <Link className="hover:text-blue-500 transition-colors" href="/admin/addMovie">
                                     Add Movie
                                 </Link>
-                                <Link className="hover:text-blue-500 transition-colors w-full" href="#">
+                                <Link className="hover:text-blue-500 transition-colors w-full" href="/admin/addSerie">
                                     Add Series
                                 </Link>
                         </div>

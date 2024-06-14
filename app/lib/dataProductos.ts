@@ -4,15 +4,12 @@ import { sql } from '@vercel/postgres';
 import { Producto } from "./definitions"
 import { unstable_noStore as noStore } from 'next/cache';
 
-var key = "6d7434b2";
-
 export async function fetchProductos(type: string) {
     noStore();
     try {
         console.log('Fetching revenue data...');
 
         const data = await sql<Producto>`SELECT * FROM peliculas WHERE disable = false AND type = ${type}`;
-
 
         return data.rows;
     } catch (error) {
@@ -90,7 +87,7 @@ export async function fetchProductosTotalPages(query: string, type: string) {
         const count = await sql`SELECT COUNT(*)
     FROM productos
     WHERE
-      disable = false AND type = ${type} AND (
+      disable = false AND type ILIKE ${`%${type}%`} AND (
         title ILIKE ${`%${query}%`} OR
         year ILIKE ${`%${query}%`} OR
         actors ILIKE ${`%${query}%`} OR

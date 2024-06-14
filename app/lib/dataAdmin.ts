@@ -149,3 +149,81 @@ export async function addProduct(productoData: Producto) {
       return error;
     }
 }
+
+
+const ITEMS_PER_PAGE = 12;
+export async function fetchFilteredTypeProductos(
+    type: string,
+    query: string,
+    currentPage: number,
+) {
+    noStore();
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+    console.log(query);
+    try {
+        const peliculas = await sql<Producto>`
+      SELECT
+        *
+      FROM productos
+      WHERE
+          type ILIKE ${`%${type}%`} AND (
+          title ILIKE ${`%${query}%`} OR
+          year ILIKE ${`%${query}%`} OR
+          actors ILIKE ${`%${query}%`} OR
+          director ILIKE ${`%${query}%`} OR
+          genere ILIKE ${`%${query}%`}
+        )
+      ORDER BY year DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+        return peliculas.rows;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch peliculas for page.');
+    }
+}
+
+export async function fetchProductsPages(type: string, query: string) {
+  noStore();
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM productos
+    WHERE
+        type ILIKE ${`%${type}%`} AND (
+        title ILIKE ${`%${query}%`} OR
+        year ILIKE ${`%${query}%`} OR
+        actors ILIKE ${`%${query}%`} OR
+        director ILIKE ${`%${query}%`}
+      )
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of invoices.');
+  }
+}
+
+
+export async function totalSeries() {
+    noStore();
+    try {
+      const total = await sql`SELECT count(*) FROM productos WHERE type = 'serie'`;
+      return total.rows[0].count;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total pages.');
+    }
+}
+export async function totalMovies() {
+    noStore();
+    try {
+      const total = await sql`SELECT count(*) FROM productos WHERE type = 'pelicula'`;
+      return total.rows[0].count;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total pages.');
+    }
+}
