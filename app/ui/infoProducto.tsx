@@ -1,23 +1,13 @@
 import { ButtonAddProducto } from "@/app/ui/button"
-import { fetchUnProducto } from "@/app/lib/dataProductos"
 import Image from "next/image"
-import { error } from "console"
+import { Producto } from "../lib/definitions"
 
 interface InfoProductoTitle {
-    id: string
+    data: Producto
 }
 
-export default async function InfoProducto({ id }: InfoProductoTitle){
-    console.log(id);
-    let data;
-    try{
-        data = await fetchUnProducto(id);
-    }catch{
-        console.log(error);
-    }
-    if (!data) {
-        throw new Error('Failed to fetch.');
-    }else{
+export default async function InfoProducto({ data }: InfoProductoTitle){
+
         return (
             <>
                 <div className="grid gap-4 md:gap-10 items-start">
@@ -71,4 +61,3 @@ export default async function InfoProducto({ id }: InfoProductoTitle){
             </>
         )
     }   
-}
