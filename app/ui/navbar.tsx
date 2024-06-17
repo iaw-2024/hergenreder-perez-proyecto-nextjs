@@ -16,7 +16,7 @@ export default function Component() {
     <header className="fixed top-0 flex h-16 w-full items-center justify-between px-4 md:px-12 bg-gray-950 text-white gap-8">
       <div className="flex items-center gap-4 ">
         <Link className="hover:text-[#4b6bfb] transition-colors" href="/">
-          <span className="font-semibold text-xl">Store</span>
+          <span className="font-semibold text-xl">Store</span> 
         </Link>
         <div className="hidden md:flex gap-4">
           <Link className="hover:text-[#4b6bfb] transition-colors" href="/movies">
