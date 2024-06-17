@@ -11,7 +11,7 @@ export default async function InfoProductoEdit({ id }: InfoProductoPelicula) {
     console.log(id); 
     const data = await fetchProducto(id);
     if(!data){
-        return <>"No se encontro el producto"</>;
+        return (<div>No se encontro el producto</div>);
     }
     else{
         return (
