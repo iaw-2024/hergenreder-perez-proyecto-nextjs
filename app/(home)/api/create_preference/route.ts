@@ -12,17 +12,15 @@ export async function POST(request: Request) {
         title: product.title,
         unit_price: Number(product.price),
         quantity: Number(product.quantity),
+        currency_id: "ARS"
       }));
     
     const preference = new Preference(client);
 
-    preference.create({
+    const response = await preference.create({
         body: {
             payment_methods: {
             excluded_payment_methods: [
-                    {
-                                id: "amex"
-                    },
                     {
                                 id: "argencard"
                     },
@@ -57,8 +55,7 @@ export async function POST(request: Request) {
           items: items,
         }
       })
-      .then(console.log)
-      .catch(console.log);
     
-    Response.json(preference);
+    console.log(response.id);
+    Response.json({id: response.id});
 }

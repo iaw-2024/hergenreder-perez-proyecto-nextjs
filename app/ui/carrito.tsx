@@ -11,7 +11,7 @@ import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 initMercadoPago('APP_USR-7f442d04-e853-40da-b794-5febfed8cf87', { locale: 'es-AR' });
 
 const productoLista : Producto[] = [];
-const preferenceID: String = "";
+//const preferenceID: String = "";
 
 async function CartItem({producto}:{producto: Producto}) {
     const deleteFilmsToCart = deleteToCart.bind(null, producto.id);
@@ -47,26 +47,6 @@ async function CartItem({producto}:{producto: Producto}) {
 
 export async function Carro() {
   const data = await listaEnCarrito();
-  const fetchPreference = async () => {
-    try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ productoLista }),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to create preference');
-      }
-  
-      const data = await response.json();
-      return data.id;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const totalPrice = await getTotalPrice();
   const suma = totalPrice ? await totalPrice.reduce(async (totalPromise, valorPromise) => {
     const total = await totalPromise;
@@ -111,7 +91,7 @@ export async function Carro() {
         </div>
       </div>
       <div className="flex justify-end mt-6 gap-2">
-        {fetchPreference && <Wallet initialization={{fetchPreference}} /> }
+       <Wallet initialization={{ preferenceId: fetchPreference }} />
       </div>
 
     </>
@@ -120,7 +100,7 @@ export async function Carro() {
 
 const fetchPreference = async () => {
   try {
-    const response = await fetch('/api/checkout', {
+    const response = await fetch('/api/create_preference', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
