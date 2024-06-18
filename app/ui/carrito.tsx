@@ -6,6 +6,13 @@ import { fetchUnProducto } from "../lib/dataProductos";
 import { Button } from "./button";
 import Image from "next/image";
 
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+
+initMercadoPago('APP_USR-7f442d04-e853-40da-b794-5febfed8cf87', { locale: 'es-AR' });
+
+const productoLista : Producto[] = [];
+const preferenceID: String = "";
+
 async function CartItem({producto}:{producto: Producto}) {
     const deleteFilmsToCart = deleteToCart.bind(null, producto.id);
     if(producto===undefined){return <></>}
@@ -40,6 +47,26 @@ async function CartItem({producto}:{producto: Producto}) {
 
 export async function Carro() {
   const data = await listaEnCarrito();
+  const fetchPreference = async () => {
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productoLista }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create preference');
+      }
+  
+      const data = await response.json();
+      return data.id;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const totalPrice = await getTotalPrice();
   const suma = totalPrice ? await totalPrice.reduce(async (totalPromise, valorPromise) => {
     const total = await totalPromise;
@@ -62,6 +89,7 @@ export async function Carro() {
           //modificar!!!!!!!!!!!!
           try {
              dataFilm = await fetchUnProducto(id);
+             productoLista.push(dataFilm);
              return <CartItem key={dataFilm?.title} producto={dataFilm} />
           } catch (error) {
               error;
@@ -83,13 +111,33 @@ export async function Carro() {
         </div>
       </div>
       <div className="flex justify-end mt-6 gap-2">
-        <div id="wallet_container">
-          <Button>Checkout</Button>
-        </div>
+        {fetchPreference && <Wallet initialization={{fetchPreference}} /> }
       </div>
+
     </>
   )
 }
+
+const fetchPreference = async () => {
+  try {
+    const response = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ productoLista }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create preference');
+    }
+
+    const data = await response.json();
+    return data.id;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default async function Carrito() {
   return (
