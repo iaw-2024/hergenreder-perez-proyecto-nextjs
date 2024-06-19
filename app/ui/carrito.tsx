@@ -3,13 +3,9 @@ import {listaEnCarrito, getTotalPrice} from "../lib/data"
 import { deleteToCart } from "../lib/actions"
 import { Producto } from "../lib/definitions";
 import { fetchUnProducto } from "../lib/dataProductos";
-import { Button } from "./button";
 import Image from "next/image";
 
-import { initMercadoPago } from '@mercadopago/sdk-react';
 import Payment from "./payment";
-
-initMercadoPago('APP_USR-7f442d04-e853-40da-b794-5febfed8cf87', { locale: 'es-AR' });
 
 let productoLista : Producto[] = [];
 //const preferenceID: String = "";
@@ -66,10 +62,8 @@ export async function Carro() {
       <div className="space-y-4 ">
         {
         data?.map(async (id) => {
-          let dataFilm = null;
-          //modificar!!!!!!!!!!!!
           try {
-             dataFilm = await fetchUnProducto(id);
+             const dataFilm = await fetchUnProducto(id);
              productoLista.push(dataFilm);
              return <CartItem key={dataFilm?.title} producto={dataFilm} />
           } catch (error) {
