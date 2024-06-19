@@ -3,19 +3,24 @@
 import React, { useState } from 'react';
 import { Producto } from '../lib/definitions';
 import { Wallet, initMercadoPago } from '@mercadopago/sdk-react';
+import { obtenerProductos } from '../lib/data';
+
 
 initMercadoPago('APP_USR-62910eb0-6930-48a2-b47c-a87204a8a574');
 
-const Payment = ({ productos }: { productos: Producto[] }) => {
+
+export  default function Payment({listaProductos}:{listaProductos: RegExpMatchArray}){
   const [preferenceId, setPreferenceId ] = useState<string | null>(null);
+  
   const createPreference = async () => {
+    const lis = await obtenerProductos(listaProductos);
     try {
       const response = await fetch('./api/create_preference', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({items: productos})
+        body: JSON.stringify({items: lis})
       });
 
       const data = await response.json();
@@ -41,5 +46,3 @@ const Payment = ({ productos }: { productos: Producto[] }) => {
     </div>
   );
 };
-
-export default Payment;

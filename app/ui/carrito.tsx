@@ -7,9 +7,6 @@ import Image from "next/image";
 
 import Payment from "./payment";
 
-let productoLista : Producto[] = [];
-//const preferenceID: String = "";
-
 async function CartItem({producto}:{producto: Producto}) {
     const deleteFilmsToCart = deleteToCart.bind(null, producto.id);
     if(producto===undefined){return <></>}
@@ -64,7 +61,6 @@ export async function Carro() {
         data?.map(async (id) => {
           try {
              const dataFilm = await fetchUnProducto(id);
-             productoLista.push(dataFilm);
              return <CartItem key={dataFilm?.title} producto={dataFilm} />
           } catch (error) {
               error;
@@ -85,7 +81,7 @@ export async function Carro() {
           <p className="font-medium text-2xl">${suma + 5}</p>
         </div>
         <div className="flex justify-end mt-6 gap-2">
-          <Payment productos = {productoLista} />
+          <Payment listaProductos = {data} />
         </div>
       </div>
 

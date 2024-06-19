@@ -1,6 +1,18 @@
 'use server'
 import { cookies } from 'next/headers'
 import { sql } from '@vercel/postgres';
+import { fetchUnProducto } from './dataProductos';
+import { Producto } from './definitions';
+
+
+export async function obtenerProductos(listaProducto:RegExpMatchArray){
+  try{
+    const productosPromises = await Promise.all(listaProducto.map(id => fetchUnProducto(id)));
+    return productosPromises;
+  }catch(error){
+    return null;
+  }
+}
 
 export async function listaEnCarrito() {
     const regex = /(?<=\/)([^/]+)/g;
@@ -13,12 +25,13 @@ export async function listaEnCarrito() {
       const price = await sql`SELECT price
       FROM productos
       WHERE
-        id = ${id}
+        id = ${id} AND disable = false;
     `;
     return price.rows[0].price;
     } catch (error) {
       console.error('Database Error:', error);
-      throw new Error('Failed to fetch total number of invoices.');
+      //throw new Error('Failed to fetch total number of invoices.');
+      return 0;
     }
   }
   
@@ -27,5 +40,4 @@ export async function listaEnCarrito() {
     return lista?.map(async (producto) => {
       return Number(await getPrice(producto));
     })
-  }
-  
+  }  
