@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const response = await preference.create({
         body: {
             payment_methods: {
-            excluded_payment_methods: [
+            /*excluded_payment_methods: [
                     {
                                 id: "argencard"
                     },
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
                     }
             ],
         excluded_payment_types: [],
-        installments: 1
+        installments: 1*/
         },
           items: items,
         }

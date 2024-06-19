@@ -7,10 +7,11 @@ import { Button } from "./button";
 import Image from "next/image";
 
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import Payment from "./payment";
 
 initMercadoPago('APP_USR-7f442d04-e853-40da-b794-5febfed8cf87', { locale: 'es-AR' });
 
-const productoLista : Producto[] = [];
+let productoLista : Producto[] = [];
 //const preferenceID: String = "";
 
 async function CartItem({producto}:{producto: Producto}) {
@@ -90,34 +91,10 @@ export async function Carro() {
           <p className="font-medium text-2xl">${suma + 5}</p>
         </div>
       </div>
-      <div className="flex justify-end mt-6 gap-2">
-       <Wallet initialization={{ preferenceId: fetchPreference }} />
-      </div>
 
     </>
   )
 }
-
-const fetchPreference = async () => {
-  try {
-    const response = await fetch('/api/create_preference', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ productoLista }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to create preference');
-    }
-
-    const data = await response.json();
-    return data.id;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export default async function Carrito() {
   return (
@@ -129,6 +106,9 @@ export default async function Carrito() {
         </Link>
       </div>
       <Carro/>
+      <div className="flex justify-end mt-6 gap-2">
+        <Payment listaProducto = {productoLista} />
+      </div>
     </div>
   )
 }
