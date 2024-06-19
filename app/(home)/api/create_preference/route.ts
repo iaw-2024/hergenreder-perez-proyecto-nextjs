@@ -2,6 +2,7 @@ import { MercadoPagoConfig, Preference } from "mercadopago";
 import { NextRequest, NextResponse } from 'next/server';
 import { Producto } from "@/app/lib/definitions";
 
+
 export async function POST(request: NextRequest) {
   try {
     // Read and log the raw request body once
@@ -11,7 +12,7 @@ export async function POST(request: NextRequest) {
     const products:Producto[] = await JSON.parse(requestBody).items;
 
     // Initialize MercadoPago client
-    const client = new MercadoPagoConfig({ accessToken: '' });
+    const client = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN!});
     
     // Map products to MercadoPago items format
     const items = products.map((product)=>({

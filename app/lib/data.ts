@@ -2,7 +2,6 @@
 import { cookies } from 'next/headers'
 import { sql } from '@vercel/postgres';
 import { fetchUnProducto } from './dataProductos';
-import { Producto } from './definitions';
 
 
 export async function obtenerProductos(listaProducto:RegExpMatchArray){

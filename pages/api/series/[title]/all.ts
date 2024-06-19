@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { fetchUnaserie } from '@/app/lib/dataSeries';
+import { fetchUnProducto } from '@/app/lib/dataProductos';
 
-export async function GET({ params }:{params:{title: string}}) {
+export async function GET({ params }:{params:{id: string}}) {
   try {
-    const peliculas = await fetchUnaserie(params.title);
+    const peliculas = await fetchUnProducto(params.id);
     return NextResponse.json(peliculas, { status: 200 });
   } catch (error) {
     console.error('Database Error:', error);
