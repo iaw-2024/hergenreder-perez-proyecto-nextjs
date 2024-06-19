@@ -1,77 +1,42 @@
 "use client"
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import { Producto } from '../lib/definitions';
 
-export default function Payment(props: {listaProducto: Producto[]}){
-    useEffect(() => {
-      initMercadoPago('APP_USR-7f442d04-e853-40da-b794-5febfed8cf87', { locale: 'es-AR' });
-    }, []);
+initMercadoPago('APP_USR-7f442d04-e853-40da-b794-5febfed8cf87', { locale: 'es-AR' });
 
-    /*const fetchPreference = async () => {
-      try {
-        const response = await fetch('/api/create_preference', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ productoLista }),
-        });
-    
-        if (!response.ok) {
-          throw new Error('Failed to create preference');
-        }
-    
-        const data = await response.json();
-        console.log(data.id);
-        console.log(data);
-        return data.id;
-      } catch (error) {
-        console.log(error);
-      }
-    };*/
+const Payment = ({ productos }: { productos: Producto[] }) => {
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
-    let preference_id: string = "";
-
-    console.log(props.listaProducto);
-
-    async function fetchear() {
-      console.log("estamos adentro de tu hermana");
+  const createPreference = async () => {
     try {
       const response = await fetch('/api/create_preference', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify( props.listaProducto ),
+        body: JSON.stringify({items: productos})
       });
-
-      console.log(props.listaProducto);
-  
-      if (!response.ok) {
-        throw new Error('Failed to create preference');
-      }
-  
-      const data = response.json();
-      console.log("===================================");
-      console.log("===================================");
-      console.log("===================================");
-      console.log(response);
-      console.log(data);
-      preference_id = data;
-      console.log("===================================");
-      console.log("===================================");
-      console.log("===================================");
+      const data = await response.json();
+      setPreferenceId(data.preferenceId);
     } catch (error) {
-      console.log(error);
+      console.error('Error creating preference:', error);
     }
-  } fetchear();
-  
+  };
 
-    return (
-      <div>
-        <Wallet initialization={{preferenceId: preference_id}} />
-      </div>
-    );
+  return (
+    <div>
+      <button onClick={createPreference} className="bg-blue-500 text-white px-4 py-2 rounded-md">
+        Pagar
+      </button>
+      {preferenceId && (
+        <div className="mt-6">
+          <Wallet initialization={{ preferenceId }} />
+        </div>
+      )}
+    </div>
+  );
 };
+
+export default Payment;

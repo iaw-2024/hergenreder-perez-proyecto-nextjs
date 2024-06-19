@@ -7,11 +7,11 @@ export async function POST(request: Request) {
 
     const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
 
-    const items = products.map((product: { id: any; title: any; price: any; quantity: any; }) => ({
+    const items = products.map((product: { id: any; title: any; price: any; }) => ({
         id: product.id,
         title: product.title,
         unit_price: Number(product.price),
-        quantity: Number(product.quantity),
+        quantity: 1,
         currency_id: "ARS"
       }));
     
@@ -19,39 +19,6 @@ export async function POST(request: Request) {
 
     const response = await preference.create({
         body: {
-            payment_methods: {
-            /*excluded_payment_methods: [
-                    {
-                                id: "argencard"
-                    },
-                    {
-                                id: "cabal"
-                    },
-                    {
-                                id: "cmr"
-                    },
-                    {
-                                id: "cencosud"
-                    },
-                    {
-                                id: "cordobesa"
-                    },
-                    {
-                                id: "diners"
-                    },
-                    {
-                                id: "naranja"
-                    },
-                    {
-                                id: "debcabal"
-                    },
-                    {
-                                id: "maestro"
-                    }
-            ],
-        excluded_payment_types: [],
-        installments: 1*/
-        },
           items: items,
         }
       })

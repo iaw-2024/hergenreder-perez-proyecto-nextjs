@@ -6,7 +6,7 @@ import { fetchUnProducto } from "../lib/dataProductos";
 import { Button } from "./button";
 import Image from "next/image";
 
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import { initMercadoPago } from '@mercadopago/sdk-react';
 import Payment from "./payment";
 
 initMercadoPago('APP_USR-7f442d04-e853-40da-b794-5febfed8cf87', { locale: 'es-AR' });
@@ -90,6 +90,9 @@ export async function Carro() {
           <p className="text-gray-500 dark:text-gray-400">Total</p>
           <p className="font-medium text-2xl">${suma + 5}</p>
         </div>
+        <div className="flex justify-end mt-6 gap-2">
+          <Payment productos = {productoLista} />
+        </div>
       </div>
 
     </>
@@ -106,9 +109,6 @@ export default async function Carrito() {
         </Link>
       </div>
       <Carro/>
-      <div className="flex justify-end mt-6 gap-2">
-        <Payment listaProducto = {productoLista} />
-      </div>
     </div>
   )
 }
