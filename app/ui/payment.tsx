@@ -1,17 +1,20 @@
 "use client"
 
-import React, { useState } from 'react';
-import { Producto } from '../lib/definitions';
+import React, { useState, useEffect} from 'react';
 import { Wallet, initMercadoPago } from '@mercadopago/sdk-react';
-import { obtenerProductos } from '../lib/data';
+import { listaEnCarrito, obtenerProductos } from '../lib/data';
 
 
 initMercadoPago('APP_USR-62910eb0-6930-48a2-b47c-a87204a8a574');
 
-
 export  default function Payment({listaProductos}:{listaProductos: RegExpMatchArray}){
   const [preferenceId, setPreferenceId ] = useState<string | null>(null);
-  
+
+  useEffect(() => {
+    // Reset preferenceId to null whenever the component is mounted
+    setPreferenceId(null);
+  }, []);
+
   const createPreference = async () => {
     const lis = await obtenerProductos(listaProductos);
     try {
@@ -41,7 +44,6 @@ export  default function Payment({listaProductos}:{listaProductos: RegExpMatchAr
           <Wallet initialization={{ preferenceId: preferenceId}} />
           </div>
         </div>
-        
       )}
     </div>
   );
