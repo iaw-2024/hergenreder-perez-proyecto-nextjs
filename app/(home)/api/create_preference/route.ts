@@ -26,8 +26,16 @@ export async function POST(request: NextRequest) {
     const preference = new Preference(client);
     const response = await preference.create({
       body:{
-         items: items
+         items: items,
+         back_urls: {
+          success: 'http://localhost:3000/carrito/pago',
+          failure: 'http://localhost:3000/carrito/pago',
+          pending: 'http://localhost:3000/carrito/pago'
+        },
+        purpose: 'wallet_purchase',
+        auto_return: 'approved'
       }
+     
     });
     
    return NextResponse.json({ id: response.id });

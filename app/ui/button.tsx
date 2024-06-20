@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import clsx from 'clsx';
-import { deleteToCart, addToCart, estaPeliculaEnCarrito } from "@/app/lib/actions";
+import { deleteToCart, addToCart, estaPeliculaEnCarrito, deleteCart } from "@/app/lib/actions";
 import {deleteToStorage} from "@/app/lib/dataAdmin";
 
 
@@ -76,4 +76,22 @@ export async function ButtonDelete({id, type} : {id : string, type: string}){
           delete
         </button>
     )
+}
+
+export async function ButtonDeleteCart(){
+  const handleSweetAlertClose = async () => {
+    await deleteCart();
+    Swal.fire({title: "Cart cleaned!",
+      text: "Your cart has been cleaned.",
+      icon: "success",
+      color: "#FFFFFF",
+      background: "#0F1A2F"
+    });
+  };
+
+  return (
+    <button onClick={handleSweetAlertClose} className="flex h-10 items-center rounded-lg bg-red-500 px-4 text-sm font-medium text-white transition-colors hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 aria-disabled:cursor-not-allowed aria-disabled:opacity-50">
+      clean cart
+    </button>
+  )
 }

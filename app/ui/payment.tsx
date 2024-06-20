@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, Suspense} from 'react';
 import { Wallet, initMercadoPago } from '@mercadopago/sdk-react';
-import { listaEnCarrito, obtenerProductos } from '../lib/data';
+import { obtenerProductos } from '../lib/data';
 
 
 initMercadoPago('APP_USR-62910eb0-6930-48a2-b47c-a87204a8a574');
@@ -41,7 +41,7 @@ export  default function Payment({listaProductos}:{listaProductos: RegExpMatchAr
       {preferenceId!==null && (
         <div id="wallet_container">
           <div className="mt-6">
-          <Wallet initialization={{ preferenceId: preferenceId}} />
+            <Wallet initialization={{ preferenceId: preferenceId}} />
           </div>
         </div>
       )}

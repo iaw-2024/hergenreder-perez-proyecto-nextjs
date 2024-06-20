@@ -18,8 +18,6 @@ export default async function Component({
 
   return (
     <div>
-      {//<Filters/>
-      }
       <Suspense key={query + currentPage} fallback={<ProductCardSkeleton />}>
         <ProductCard type="pelicula" query={query} currentPage={currentPage}/>
       </Suspense>

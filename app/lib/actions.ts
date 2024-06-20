@@ -22,6 +22,21 @@ export async function addToCart(id:string){
     }
   }
 
+  export async function deleteCart(){
+    const cookieStore = cookies()
+    try{
+        if(cookieStore.get('cliente') === undefined){
+            cookieStore.set({name: "cliente", value: ""});
+        }
+        else{
+            cookieStore.set({name: "cliente", value: ""});
+        }
+      return { message: 'carrito limpio' };
+    }catch(error){
+      console.log(error);
+    }
+  }
+
   export async function deleteToCart(id:string){
     const producto = "/"+id+"/";
     const cookieStore = cookies();
