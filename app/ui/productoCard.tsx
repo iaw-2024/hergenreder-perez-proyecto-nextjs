@@ -1,6 +1,6 @@
 import { ButtonAddProducto } from "@/app/ui/button"
 import Link from "next/link"
-import {fetchFilteredTypeProductos} from "@/app/lib/dataAdmin"
+import {fetchFilteredTypeProductos} from "@/app/lib/dataProductos"
 import { Producto } from "@/app/lib/definitions"
 import Image from "next/image"
 

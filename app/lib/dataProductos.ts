@@ -77,7 +77,7 @@ export async function fetchFilteredTypeProductos(
         *
       FROM productos
       WHERE
-        disable = false AND type = ${type} AND (
+        disable = false AND type ILIKE ${`%${type}%`} AND (
           title ILIKE ${`%${query}%`} OR
           year ILIKE ${`%${query}%`} OR
           actors ILIKE ${`%${query}%`} OR
