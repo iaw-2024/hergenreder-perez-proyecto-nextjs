@@ -9,12 +9,26 @@ export async function fetchProductos(type: string) {
     try {
         console.log('Fetching revenue data...');
 
-        const data = await sql<Producto>`SELECT * FROM peliculas WHERE disable = false AND type = ${type}`;
+        const data = await sql<Producto>`SELECT * FROM productos WHERE disable = false AND type = ${type}`;
 
         return data.rows;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch ' + { type } + ' data.');
+    }
+}
+
+export async function fetchAllProductos() {
+    noStore();
+    try {
+        console.log('Fetching revenue data...');
+
+        const data = await sql<Producto>`SELECT * FROM productos WHERE disable = false`;
+
+        return data.rows;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch productos data.');
     }
 }
 
