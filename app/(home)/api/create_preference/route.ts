@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Producto } from "@/app/lib/definitions";
 
 export async function POST(request: NextRequest) {
-  const baseUrl = window.location.origin;
   try {
     // Read and log the raw request body once
     const requestBody = await request.text();
@@ -29,9 +28,9 @@ export async function POST(request: NextRequest) {
       body:{
          items: items,
          back_urls: {
-          success: 'https://hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app//carrito/pago',
-          failure: 'https://hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app//carrito/pago',
-          pending: 'https://hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app//carrito/pago'
+          success: 'https:/hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app/carrito/pago',
+          failure: 'https:/hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app/carrito/pago',
+          pending: 'https:/hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app/carrito/pago'
         },
         purpose: 'wallet_purchase',
         auto_return: 'approved'
