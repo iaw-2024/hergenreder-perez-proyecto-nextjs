@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Producto } from "@/app/lib/definitions";
 
 export async function POST(request: NextRequest) {
+  const baseUrl = window.location.origin;
   try {
     // Read and log the raw request body once
     const requestBody = await request.text();
@@ -28,9 +29,9 @@ export async function POST(request: NextRequest) {
       body:{
          items: items,
          back_urls: {
-          success: 'http://localhost:3000/carrito/pago',
-          failure: 'http://localhost:3000/carrito/pago',
-          pending: 'http://localhost:3000/carrito/pago'
+          success: baseUrl+'/carrito/pago',
+          failure: baseUrl+'/carrito/pago',
+          pending: baseUrl+'/carrito/pago'
         },
         purpose: 'wallet_purchase',
         auto_return: 'approved'
