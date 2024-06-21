@@ -58,9 +58,9 @@ export default async function EstadoPago({ paymentId, status }: { paymentId: str
                 <div className="text-gray-400 justify-center">
                     <h1 className="text-l font-bold">Detalle de pago:</h1>
                     <div className="px-6">
-                        <p>ID de Pago: {paymentToShow?.id}</p>
-                        <p>Estado: {paymentToShow?.status}</p>    
-                        <p>email: {paymentToShow?.payer.email}</p>    
+                        {paymentToShow && <p>ID de Pago: {paymentToShow?.id}</p>}
+                        {paymentToShow && <p>Estado: {paymentToShow?.status}</p>}    
+                        {paymentToShow && <p>email: {paymentToShow?.payer.email}</p>}    
                     </div>
                 </div>    
             </div>
