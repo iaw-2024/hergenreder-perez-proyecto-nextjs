@@ -14,12 +14,12 @@ const inter = Inter({
   display: 'swap',
   variable: '--font-inter',
 })
-
+ 
 export default function Layout({ children }: Readonly<{
   children: React.ReactNode;
 }>)  {
   return (
-      <div className={`${inter.variable} bg-white dark:bg-gray-900`}>
+      <div className={`${inter.variable} bg-gray-900`}>
         <AdminHeader />
         <div className='py-20 p-4 '>
           {children}
