@@ -1,10 +1,10 @@
 "use client"
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState } from 'react';
 import { Wallet, initMercadoPago } from '@mercadopago/sdk-react';
 import { obtenerProductos } from '../lib/data';
 import Swal from 'sweetalert2';
-import ReactDOM, { useFormStatus } from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { Button } from './button';
 
 initMercadoPago('APP_USR-62910eb0-6930-48a2-b47c-a87204a8a574');
@@ -26,7 +26,7 @@ export default function Payment({ listaProductos }: { listaProductos: RegExpMatc
 
       const data = await response.json();
       const MySwal = Swal;
-
+      
       // Función para mostrar la alerta con el componente de React
       MySwal.fire({
         title: 'Pagar con Mercado Libre',
@@ -38,21 +38,22 @@ export default function Payment({ listaProductos }: { listaProductos: RegExpMatc
         background: "#0F1A2F",
         cancelButtonColor: "#3085d6",
         didOpen: () => {
+          const root = ReactDOM.createRoot(document.getElementById('wallet-container')!);
           // Renderiza el componente React en el contenedor HTML de SweetAlert2
-          ReactDOM.render(
+          root.render(
             <>
-              {lis?.map((porducto) => <p>{porducto?.title} - ${porducto?.price}</p>)}
+              {lis?.map((porducto) => <p key={porducto?.id}>{porducto?.title} - ${porducto?.price}</p>)}
               <Wallet initialization={{ preferenceId: data.id }} />
             </>,
-            document.getElementById('wallet-container')
           );
         },
         willClose: () => {
+          const root = ReactDOM.createRoot(document.getElementById('wallet-container')!);
           setLoging(false);
           // Limpia el contenedor HTML cuando la alerta se cierra
           const walletContainer = document.getElementById('wallet-container');
           if (walletContainer) {
-            ReactDOM.unmountComponentAtNode(walletContainer);
+            root.unmount();
           }
         }
       });

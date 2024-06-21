@@ -13,13 +13,13 @@ export default async function InfoProducto({ data }: InfoProductoTitle){
                 <div className="grid gap-4 md:gap-10 items-start">
                     <Image
                         alt={data?.title}
-                        className="aspect-[2/3] object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
+                        className="aspect-[2/3] object-cover border w-full rounded-lg overflow-hidden border-gray-800"
                         height={900}
                         src={data?.poster}
                         width={600}
                     />
                 </div>
-                <div className="grid gap-4 md:gap-10 items-start dark:text-white">
+                <div className="grid gap-4 md:gap-10 items-start text-white">
                     <div className="grid gap-4">
                         <h1 className="font-bold text-3xl lg:text-4xl">{data?.title}</h1>
                         <div>

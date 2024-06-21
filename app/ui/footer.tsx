@@ -2,25 +2,25 @@ import Link from "next/link"
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-12 md:py-16 bg-white dark:bg-gray-900 inset-0 bg-gradient-to-t from-black/80 to-transparent">
-      <div className="hidden md:grid container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-500 dark:text-gray-400">
+    <footer className="bg-gray-900 text-white py-12 md:py-16 inset-0 bg-gradient-to-t from-black/80 to-transparent">
+      <div className="hidden md:grid container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-400">
         <div>
-          <h3 className="text-xl font-bold mb-4 text-black dark:text-white">Acme Inc.</h3>
+          <h3 className="text-xl font-bold mb-4 text-white">Acme Inc.</h3>
           <p className=" mb-6">
             Acme Inc. is a leading provider of innovative technology solutions. We are dedicated to helping our clients
             achieve their goals through cutting-edge products and exceptional service.
           </p>
           <div className="flex space-x-4">
-            <a className="hover:text-black dark:hover:text-white" href="#">
+            <a className="hover:text-white" href="#">
               <FacebookIcon  />
             </a>
-            <a className="hover:text-black dark:hover:text-white" href="#">
+            <a className="hover:text-white" href="#">
               <TwitterIcon/>
             </a>
-            <a className="hover:text-black dark:hover:text-white" href="#">
+            <a className="hover:text-white" href="#">
               <LinkedinIcon/>
             </a>
-            <a className="hover:text-black dark:hover:text-white" href="#">
+            <a className="hover:text-white" href="#">
               <InstagramIcon/>
             </a>
           </div>
@@ -30,13 +30,13 @@ export function Footer() {
           <div className="space-y-2">
             <div className="flex items-center space-x-2 ">
               <MailIcon/>
-              <a className=" hover:text-black dark:hover:text-white" href="#">
+              <a className=" hover:text-white" href="#">
                 info@acme.com
               </a>
             </div>
             <div className="flex items-center space-x-2">
               <PhoneIcon/>
-              <a className="hover:text-black dark:hover:text-white" href="#">
+              <a className="hover:text-white" href="#">
                 +1 (234) 567-890
               </a>
             </div>
@@ -47,54 +47,54 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold mb-4 text-black dark:text-white">Quick Links</h3>
+          <h3 className="text-xl font-bold mb-4 text-white">Quick Links</h3>
           <div className="space-y-2 space-x-2 ">
-            <Link className="hover:text-black dark:hover:text-white" href="#">
+            <Link className="hover:text-white" href="#">
               Home
             </Link>
-            <Link className="hover:text-black dark:hover:text-white" href="#">
+            <Link className="hover:text-white" href="#">
               About
             </Link>
-            <Link className="hover:text-black dark:hover:text-white" href="#">
+            <Link className="hover:text-white" href="#">
               Services
             </Link>
-            <Link className="hover:text-black dark:hover:text-white" href="#">
+            <Link className="hover:text-white" href="#">
               Contact
             </Link>
           </div>
         </div>
       </div>
 
-      <div className="md:hidden container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-500 dark:text-gray-400">
+      <div className="md:hidden container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-400">
         <div>
-          <h3 className="text-xl font-bold mb-4 text-black dark:text-white">Acme Inc.</h3>
+          <h3 className="text-xl font-bold mb-4 text-white">Acme Inc.</h3>
           <div className="flex space-x-4">
-            <a className="hover:text-black dark:hover:text-white" href="#">
+            <a className="hover:text-white" href="#">
               <FacebookIcon  />
             </a>
-            <a className="hover:text-black dark:hover:text-white" href="#">
+            <a className="hover:text-white" href="#">
               <TwitterIcon/>
             </a>
-            <a className="hover:text-black dark:hover:text-white" href="#">
+            <a className="hover:text-white" href="#">
               <LinkedinIcon/>
             </a>
-            <a className="hover:text-black dark:hover:text-white" href="#">
+            <a className="hover:text-white" href="#">
               <InstagramIcon/>
             </a>
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold mb-4 text-black dark:text-white">Contact Us</h3>
+          <h3 className="text-xl font-bold mb-4 text-white">Contact Us</h3>
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <MailIcon/>
-              <a className="hover:text-black dark:hover:text-white" href="#">
+              <a className="hover:text-white" href="#">
                 info@acme.com
               </a>
             </div>
             <div className="flex items-center space-x-2">
               <PhoneIcon/>
-              <a className="hover:text-black dark:hover:text-white" href="#">
+              <a className="hover:text-white" href="#">
                 +1 (234) 567-890
               </a>
             </div>
@@ -105,18 +105,18 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold mb-4 text-black dark:text-white">Quick Links</h3>
+          <h3 className="text-xl font-bold mb-4 text-white">Quick Links</h3>
           <div className="space-x-2">
-            <Link className="hover:text-black dark:hover:text-white" href="#">
+            <Link className="hover:text-white" href="#">
               Home
             </Link>
-            <Link className="hover:text-black dark:hover:text-white" href="#">
+            <Link className="hover:text-white" href="#">
               About
             </Link>
-            <Link className="hover:text-black dark:hover:text-white" href="#">
+            <Link className="hover:text-white" href="#">
               Services
             </Link>
-            <Link className="hover:text-black dark:hover:text-white" href="#">
+            <Link className="hover:text-white" href="#">
               Contact
             </Link>
           </div>
