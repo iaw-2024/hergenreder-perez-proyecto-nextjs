@@ -28,12 +28,10 @@ export default async function InfoProducto({ data }: InfoProductoTitle){
                             </p>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="text-4xl font-bold">${data?.price}</div>
+                            <div className="text-4xl font-bold">${data.disable? " - " : data.price}</div>
                         </div>
                     </div>
-                    
-                        <ButtonAddProducto id={data?.id}/>
-    
+                        {data.disable? <h1 className="font-bold text-3xl lg:text-4xl">No disponible</h1> : <ButtonAddProducto id={data?.id}/>}
                     <div className="grid gap-4 text-sm leading-loose">
                         <h2 className="font-bold text-lg">Details</h2>
                         <ul className="grid gap-2">

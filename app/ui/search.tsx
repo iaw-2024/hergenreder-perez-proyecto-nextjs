@@ -10,9 +10,10 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const { replace } = useRouter();
 
   switch(pathname){
-    case "/": pathname="/productos"; break;
+    case "/movies": pathname="/movies"; break;
+    case "/series": pathname="/series"; break;
     case "/admin": pathname="/admin/productos"; break;
-    default: break;
+    default: pathname="/productos";break;
   }
 
   const handleSearch = useDebouncedCallback((term) => {

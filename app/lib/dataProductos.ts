@@ -38,7 +38,7 @@ export async function fetchUnProducto(id: string) {
     try {
         console.log('Fetching revenue data...' + id);
 
-        const data = await sql<Producto>`SELECT * FROM productos WHERE id = ${id} AND disable = false`;
+        const data = await sql<Producto>`SELECT * FROM productos WHERE id = ${id}`;
 
         return data.rows[0];
     } catch (error) {

@@ -1,35 +1,37 @@
 'use client';
 import Swal from 'sweetalert2';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Producto } from "@/app/lib/definitions";
 import { updateMovie } from "@/app/lib/dataAdmin"; 
 import { updateSerie } from "@/app/lib/dataAdmin";
 import { useRouter } from 'next/navigation';
-import {ButtonDelete} from '../button';
+import { ButtonDelete } from '../button';
 
 interface ProductFormProps {
   movieData: Producto;
 }
 
 export default function ProductForm({ movieData }: ProductFormProps) {
-  const [formData, setFormData] = useState({ ...movieData });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value
-    }));
-  };
+  const formRef = useRef<HTMLFormElement>(null);
 
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    //e.preventDefault();
+    e.preventDefault();
+    const formData = new FormData(formRef.current!);
+    const data = Object.fromEntries(formData.entries());
+    const finalData:Producto = {
+      ...movieData,
+      ...data,
+      year: Number(data.year),
+      price: Number(data.price),
+      disable: data.disable === 'true',
+      totalseasons: data.totalseasons ? Number(data.totalseasons) : 0,
+    };
+
     try {
-      formData?.type === "pelicula" ? await updateMovie(formData): await updateSerie(formData);
-     
-      router.push('/admin/movies');
+      finalData.type === "pelicula" ? await updateMovie(finalData) : await updateSerie(finalData);
+      await Swal.fire("exito").then(router.refresh);
     } catch (error) {
       console.error('Database Error:', error);
       Swal.fire("Database Error: Failed to Update product.", "", "error");
@@ -43,7 +45,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
           <h2 className="text-xl font-bold">{movieData.type}</h2>
           <ButtonDelete id={movieData.id} type={movieData.type}/>
         </div>
-        <form onSubmit={handleSubmit} className="bg-[#0F1A2F] rounded-lg p-6 space-y-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="bg-[#0F1A2F] rounded-lg p-6 space-y-4">
           <div>
             <label className="block font-medium mb-1" htmlFor="title">
               Title
@@ -51,9 +53,9 @@ export default function ProductForm({ movieData }: ProductFormProps) {
             <input
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="title"
+              name="title"
               type="text"
-              value={formData.title}
-              onChange={handleChange}
+              defaultValue={movieData.title}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -64,9 +66,9 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               <input
                 className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                 id="year"
+                name="year"
                 type="number"
-                value={formData.year}
-                onChange={handleChange}
+                defaultValue={movieData.year}
               />
             </div>
           </div>
@@ -77,9 +79,9 @@ export default function ProductForm({ movieData }: ProductFormProps) {
             <input
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="poster"
+              name="poster"
               type="text"
-              value={formData.poster}
-              onChange={handleChange}
+              defaultValue={movieData.poster}
             />
           </div>
           <div>
@@ -89,8 +91,8 @@ export default function ProductForm({ movieData }: ProductFormProps) {
             <textarea
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] resize-none dark:border-gray-800"
               id="plot"
-              value={formData.plot}
-              onChange={handleChange}
+              name="plot"
+              defaultValue={movieData.plot}
             />
           </div>
           <div>
@@ -100,12 +102,12 @@ export default function ProductForm({ movieData }: ProductFormProps) {
             <input
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="runtime"
+              name="runtime"
               type="text"
-              value={formData.runtime}
-              onChange={handleChange}
+              defaultValue={movieData.runtime}
             />
           </div>
-          {formData.type === "serie" ? (
+          {movieData.type === "serie" ? (
               <div>
                 <label className="block font-medium mb-1" htmlFor="totalseasons">
                   Seasons
@@ -113,9 +115,9 @@ export default function ProductForm({ movieData }: ProductFormProps) {
                 <input
                   className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                   id="totalseasons"
+                  name="totalseasons"
                   type="number"
-                  value={formData.totalseasons}
-                  onChange={handleChange}
+                  defaultValue={movieData.totalseasons}
                 />
               </div>
             ) : null          
@@ -127,12 +129,12 @@ export default function ProductForm({ movieData }: ProductFormProps) {
             <input
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="genere"
+              name="genere"
               type="text"
-              value={formData.genere}
-              onChange={handleChange}
+              defaultValue={movieData.genere}
             />
           </div>
-          {formData?.type === "pelicula" ? (
+          {movieData.type === "pelicula" ? (
                 <div>
                 <label className="block font-medium mb-1" htmlFor="director">
                   Director
@@ -140,22 +142,22 @@ export default function ProductForm({ movieData }: ProductFormProps) {
                 <input
                   className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                   id="director"
+                  name="director"
                   type="text"
-                  value={formData.director}
-                  onChange={handleChange}
+                  defaultValue={movieData.director}
                 />
               </div>
             ) :
                 <div>
-                <label className="block font-medium mb-1" htmlFor="director">
+                <label className="block font-medium mb-1" htmlFor="writer">
                   Writer 
                 </label>
                 <input
                   className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                   id="writer"
+                  name="writer"
                   type="text"
-                  value={formData.writer}
-                  onChange={handleChange}
+                  defaultValue={movieData.writer}
                 />
               </div>  
           }
@@ -166,9 +168,9 @@ export default function ProductForm({ movieData }: ProductFormProps) {
             <input
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="actors"
+              name="actors"
               type="text"
-              value={formData.actors}
-              onChange={handleChange}
+              defaultValue={movieData.actors}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -179,9 +181,9 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               <input
                 className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                 id="price"
+                name="price"
                 type="number"
-                value={formData.price}
-                onChange={handleChange}
+                defaultValue={movieData.price}
               />
             </div>
           </div>
@@ -193,8 +195,8 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               <select
                 className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                 id="disable"
-                defaultValue={formData.disable.valueOf().toString()}
-                onChange={handleChange}
+                name="disable"
+                defaultValue={movieData.disable.toString()}
               >
                 <option value="true">true</option>
                 <option value="false">false</option>
@@ -212,7 +214,3 @@ export default function ProductForm({ movieData }: ProductFormProps) {
     </div>
   );
 }
-
-
-
-

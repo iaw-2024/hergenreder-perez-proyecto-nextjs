@@ -1,9 +1,8 @@
 import { signOut } from "@/auth";
 import { PowerIcon } from '@heroicons/react/24/outline';
 import  NavLink from "./navLink";
-import Search from "../search"
+import Search from "./search"
 import {Suspense} from "react";
-import Swal from "sweetalert2";
 
 export default function AdminPage() {
   

@@ -6,9 +6,15 @@ import { fetchUnProducto } from './dataProductos';
 
 export async function obtenerProductos(listaProducto:RegExpMatchArray){
   try{
-    const productosPromises = await Promise.all(listaProducto.map(id => fetchUnProducto(id)));
-    return productosPromises;
+    const productosPromises = await Promise.all(listaProducto.map(async id =>{
+      const product = await fetchUnProducto(id);
+      if(product?.disable === false) return product;
+      else return null;
+    } ));
+    const productos = productosPromises.filter(product => product !== null);
+    return productos;
   }catch(error){
+    console.log(error);
     return null;
   }
 }
