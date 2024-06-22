@@ -255,6 +255,18 @@ export async function getTransactions( currentPage: number) {
   }
 }
 
+export async function getTransactionsForPage() {
+  noStore();
+  try {
+    const total = await sql`SELECT count(*) FROM transactions;`;
+    const totalPages = Math.ceil(Number(total.rows[0].count) / TRANSACTIONS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total pages.');
+  }
+}
+
 export async function getTotalTransactions() {
   noStore();
   try {

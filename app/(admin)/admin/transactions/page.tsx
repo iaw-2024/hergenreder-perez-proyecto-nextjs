@@ -1,5 +1,4 @@
-import { getTotalTransactions } from "@/app/lib/dataAdmin";
-import { AdminPage } from "@/app/ui/admin/adminPage";
+import { getTransactionsForPage } from "@/app/lib/dataAdmin";
 import Transactions from "@/app/ui/admin/transactions";
 import Pagination from "@/app/ui/pagination";
 import { Suspense } from "react";
@@ -12,7 +11,8 @@ export default async function Page({
     };
 }) {
     const currentPage = Number(searchParams?.page) || 1;
-    const totalPages = await getTotalTransactions();
+    const totalPages = await getTransactionsForPage();
+
     return (
         <>
             <div className="w-3/4 mx-auto text-white bg-gray-950 rounded-lg p-6">

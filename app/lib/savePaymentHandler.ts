@@ -71,11 +71,10 @@ async function getPaymentInfo(paymentId: string) {
 };
 
 export default async function SavePaymentHandler (paymentId : string, status:string) {
-  console.log("llega");
- 
+
     if (status === 'approved') {
       const formData:Payment|null = await getPaymentInfo(paymentId);
-      insertTransactions(formData);
-      insertItemsTransactions(formData);
+      await insertTransactions(formData);
+      await insertItemsTransactions(formData);
     }
   };

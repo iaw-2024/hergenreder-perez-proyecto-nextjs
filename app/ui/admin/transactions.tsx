@@ -1,105 +1,92 @@
 "use client"
-import React, { useState, useEffect } from "react"
-import { getTransactions, getItemsForTransactions} from "@/app/lib/dataAdmin";
+import React, { useState, useEffect, Suspense } from "react"
+import { getTransactions, getItemsForTransactions } from "@/app/lib/dataAdmin";
 import { Button } from "../button";
 import { QueryResultRow } from "@vercel/postgres";
 
 export default function Transactions({
-    currentPage,
-  }: {
-    currentPage: number;
-  }) 
- {
+  currentPage,
+}: {
+  currentPage: number;
+}) {
 
-    const [transactions, setTransactions] = useState<QueryResultRow[]>([]);
-    const [expandedTransactionId, setExpandedTransactionId] = useState<string | null>(null);
-    const [expandedItems, setExpandedItems] = useState<QueryResultRow[] | null>(null);
-  
-    const fetchTransactions = async () => {
-      try {
-        const transactionsData = await getTransactions(currentPage);
-        setTransactions(transactionsData);
-      } catch (error) {
-        console.error("Error fetching transactions:", error);
+  const [transactions, setTransactions] = useState<QueryResultRow[]>([]);
+  const [expandedTransactionId, setExpandedTransactionId] = useState<string | null>(null);
+  const [expandedItems, setExpandedItems] = useState<QueryResultRow[] | null>(null);
+
+  const fetchTransactions = async () => {
+    try {
+      const transactionsData = await getTransactions(currentPage);
+      setTransactions(transactionsData);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [currentPage]);
+
+  const toggleTransactionDetails = async (id: string) => {
+    try {
+      if (expandedTransactionId === id) {
+        setExpandedTransactionId(null);
+        setExpandedItems(null);
+        return;
       }
-    };
-
-    const toggleTransactionDetails = async (id: string) => {
-        try {
-          if (expandedTransactionId === id) {
-            setExpandedTransactionId(null);
-            setExpandedItems(null);
-          } else {
-            setExpandedTransactionId(id);
-            const items = await getItemsForTransactions(id);
-            setExpandedItems(items);
-          }
-        } catch (error) {
-          console.error("Error fetching items for transaction:", error);
-        }
-      };
-
-      useEffect(() => {
-        fetchTransactions();
-      });
+      setExpandedTransactionId(id);
+      const items = await getItemsForTransactions(id);
+      setExpandedItems(items);
+    } catch (error) {
+      console.error("Error fetching items for transaction:", error);
+    }
+  };
 
   return (
     <div className="w-full overflow-x-auto">
-      <table className="w-full table-auto">
-        <thead>
-          <tr className="bg-muted text-muted-foreground">
-            <th className="px-4 py-3 text-left">Date</th>
-            <th className="px-4 py-3 text-left">Id</th>
-            <th className="px-4 py-3 text-right">Total</th>
-            <th className="px-4 py-3 text-right">Items</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((transaction) => (
-            <React.Fragment key={transaction.id}>
-              <tr className="border-b">
-                <td className="px-4 py-3 font-medium">{new Date(transaction.date).toLocaleDateString()}</td>
-                <td className="px-4 py-3 font-medium">{transaction.id}</td>
-                <td className="px-4 py-3 text-right font-medium">${transaction.amount}</td>
-                <td className="px-4 py-3 text-right ">
-                    <div className="flex justify-end">
-                        <Button onClick={() => toggleTransactionDetails(transaction.id)}>
-                            <ChevronDownIcon/>
-                        </Button>
-                    </div>
-                </td>
-              </tr>
-              {expandedTransactionId === transaction.id && expandedItems!==null && (
-                <tr>
-                  <td colSpan={3} className="px-4 py-3">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-muted/20">
-                          <th className="px-4 py-2 text-left">Item</th>
-                          <th className="px-4 py-2 text-right">IdItem</th>
-                          <th className="px-4 py-2 text-right">Price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {expandedItems.map((expandedItems) => {
-                          return (
-                            <tr key={expandedItems.iditem}>
-                              <td className="px-4 py-2">{expandedItems.title}</td>
-                              <td className="px-4 py-2 text-right">{expandedItems.iditem}</td>
-                              <td className="px-4 py-2 text-right">${expandedItems.unit_price}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              )}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
+    <div className="bg-white shadow-md rounded">
+      <div className="grid grid-cols-4 gap-4 px-6 bg-gray-950 text-gray-300">
+        <div className="text-left">Date</div>
+        <div className="text-left">Id</div>
+        <div className="text-right">Total</div>
+        <div className="text-right">Items</div>
+      </div>
+      <div className="divide-y divide-gray-200 bg-gray-950">
+        {transactions.map((transaction) => (
+          <div key={transaction.id} className="flex flex-col">
+            <div className="flex flex-row items-center justify-between px-6 py-3">
+              <div className="text-left ">{new Date(transaction.date).toLocaleDateString()}</div>
+              <div className="text-left ">{transaction.id}</div>
+              <div className="text-right">${transaction.amount}</div>
+              <Button onClick={() => toggleTransactionDetails(transaction.id)} >
+                <ChevronDownIcon />
+              </Button>
+            </div>
+            {expandedTransactionId === transaction.id && expandedItems !== null && (
+             <div className="grid grid-cols-3 gap-4 p-4 bg-gray-900 rounded-lg">
+             <div className="col-span-3">
+               <div className="grid grid-cols-3 text-gray-300">
+                 <div className="px-4 text-left">Item</div>
+                 <div className="px-4 text-left">IdItem</div>
+                 <div className="px-4 text-right">Price</div>
+               </div>
+             </div>
+             {expandedItems.map((item) => (
+                 <div className="col-span-3">
+                  <div className="grid grid-cols-3">
+                   <div className="px-4 text-left">{item.title}</div>
+                   <div className="px-4 text-left">{item.iditem}</div>
+                   <div className="px-4 text-right">${item.unit_price}</div>
+                   </div>
+                 </div>
+             ))}
+           </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
+  </div>
   )
 }
 
