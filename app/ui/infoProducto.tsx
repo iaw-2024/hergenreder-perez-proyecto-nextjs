@@ -6,8 +6,19 @@ interface InfoProductoTitle {
     data: Producto
 }
 
-export default async function InfoProducto({ data }: InfoProductoTitle){
+interface RatingData {
+    Source: string,
+    Value: string
+}
 
+
+export default async function InfoProducto({ data }: InfoProductoTitle){
+        var key="6d7434b2";
+        var url="http://www.omdbapi.com/?apikey="+key+"&t="+data.title;
+        console.log('Fetching serie data...');
+        const response = await (await fetch(url)).json();
+        const rating: RatingData[] = (await response.Ratings);
+       
         return (
             <>
                 <div className="grid gap-4 md:gap-10 items-start">
@@ -52,6 +63,19 @@ export default async function InfoProducto({ data }: InfoProductoTitle){
                             <li>
                                 <span className="font-medium">Actors: </span>
                                 {data?.actors}{"\n                    "}
+                            </li>
+                            <li>
+                            {rating.length > 0 && <span className="font-medium">Ratings: </span> }
+                            <ul>
+                                {
+                                rating?.map((rating) => (
+                                    <li className="px-2 " key={rating.Source}>
+                                        <span className="font-medium">{rating.Source}: </span>
+                                        {rating.Value}{"\n                    "}
+                                    </li>
+                                ))
+                                }
+                            </ul>
                             </li>
                         </ul>
                     </div>

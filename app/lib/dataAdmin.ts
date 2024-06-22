@@ -159,7 +159,6 @@ export async function fetchFilteredTypeProductos(
 ) {
     noStore();
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-    console.log(query);
     try {
         const peliculas = await sql<Producto>`
       SELECT
@@ -227,3 +226,54 @@ export async function totalMovies() {
       throw new Error('Failed to fetch total pages.');
     }
 }
+
+export async function getLastTransactions() {
+    noStore();
+    try {
+      const total = await sql`SELECT * FROM transactions ORDER BY date DESC LIMIT 5;`;
+      return total.rows;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total pages.');
+    }
+}
+
+const TRANSACTIONS_PER_PAGE = 5;
+export async function getTransactions( currentPage: number) {
+  noStore();
+    const offset = (currentPage - 1) * TRANSACTIONS_PER_PAGE;
+  noStore();
+  try {
+    const total = await sql`
+      SELECT * FROM transactions 
+      ORDER BY date DESC
+      LIMIT ${TRANSACTIONS_PER_PAGE} OFFSET ${offset}`;
+    return total.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total pages.');
+  }
+}
+
+export async function getTotalTransactions() {
+  noStore();
+  try {
+    const total = await sql`SELECT count(*) FROM transactions;`;
+    return total.rows[0].count;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total pages.');
+  }
+}
+
+export async function getItemsForTransactions(id: string) {
+  noStore();
+  try {
+    const total = await sql`SELECT * FROM items_transactions WHERE id_compra = ${id};`;
+    return total.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total pages.');
+  }
+}
+

@@ -105,3 +105,22 @@ export function InfoProductSkeleton() {
     </>
   )
 }
+
+export function ItemCartSkeleton() {
+  return (
+    <div className="space-y-4 ">
+      <div className="grid grid-cols-[80px_1fr_80px] items-center gap-4">
+        <div className="w-full aspect-[1] bg-gray-300 animate-pulse rounded-lg"></div>
+        <div>
+            <div className="mt-2 h-6 w-24 rounded-md bg-gray-400 animate-pulse" />
+            <div className="mt-2 h-4 w-16 rounded-md bg-gray-600 animate-pulse" />
+        </div>
+        <div>
+        <div className="mt-2 h-6 w-20 rounded-md bg-gray-400 animate-pulse" />
+        <div className="mt-2 h-2 w-20 rounded-md bg-red-400 animate-pulse"/>
+        </div>
+      </div>
+    </div>
+    
+  )
+}

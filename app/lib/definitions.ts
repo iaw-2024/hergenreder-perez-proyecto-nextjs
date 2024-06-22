@@ -28,4 +28,9 @@ export type Producto = {
         email: string;
       }
       transaction_amount: number;
+      items:{
+        id: string,
+        title: string,
+        unit_price: number
+      }[]
   };

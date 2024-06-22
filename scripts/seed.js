@@ -179,11 +179,12 @@ async function seedUsers(client) {
     try {
         const createTable = await client.sql`
         CREATE TABLE IF NOT EXISTS transactions (
-          id INT PRIMARY KEY,   
+          id BIGINT PRIMARY KEY,   
           status VARCHAR(255) NOT NULL,
           payer_id VARCHAR(255) NOT NULL,
           payer_email VARCHAR(255) NOT NULL,
-          amount INT NOT NULL
+          amount INT NOT NULL, 
+          date VARCHAR(10) DEFAULT TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD')
         );`;
         console.log(`Created "transactions" table`);
 
@@ -197,14 +198,26 @@ async function seedUsers(client) {
 
   }
 
-  //agregamos una transaccion de ejemplo a la tabla
-  async function seedTransactions(client){
 
-    return client.sql`
-        INSERT INTO transactions (id, status, payer_id, payer_email, amount)
-        VALUES (1, 'approved', 12, first@email.com, 20);
-       `;
-  }
+  async function crearTablaItemsTransactions(client) {
+    try {
+        const insert = await client.sql`
+               CREATE TABLE IF NOT EXISTS items_transactions (
+                id_compra BIGINT NOT NULL,
+                idItem UUID NOT NULL,
+                title VARCHAR(255) NOT NULL,
+                unit_price NUMERIC(10, 2) NOT NULL,
+                PRIMARY KEY (id_compra, idItem),
+                 FOREIGN KEY (id_compra) REFERENCES transactions(id)
+              );`;
+
+        console.log("Created 'items_transactions' table");
+        return insert;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return error;
+    }
+}
 
 async function main() {
     const client = await db.connect();
@@ -213,7 +226,7 @@ async function main() {
     await seedProductos(client);
     await seedUsers(client);
     await crearTablaTransacciones(client);
-    await seedTransactions(client);
+    await crearTablaItemsTransactions(client);
     await client.end();
   }
   

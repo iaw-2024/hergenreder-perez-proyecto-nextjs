@@ -2,7 +2,7 @@
 import { cookies } from 'next/headers'
 import { sql } from '@vercel/postgres';
 import { fetchUnProducto } from './dataProductos';
-import { Payment } from './definitions';
+
 
 export async function obtenerProductos(listaProducto:RegExpMatchArray){
   try{
@@ -47,10 +47,4 @@ export async function listaEnCarrito() {
     })
   }  
 
-export async function savePaymentData(paymentInfo: Payment) {
-  try {
-    console.log('Payment information saved successfully:', paymentInfo);
-  } catch (error) {
-    console.error('Error saving payment information:', error);
-  }
-}
+

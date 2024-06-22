@@ -1,9 +1,11 @@
+
 import Link from "next/link";
 import { Button, ButtonDeleteCart } from "./button";
 import SavePaymentHandler from "../lib/savePaymentHandler";
+import { useEffect } from "react";
 
-export default async function EstadoPago({ paymentId, status }: { paymentId: string, status: string }) {
-
+export default async function EstadoPago({ paymentId, status }: { paymentId: string, status: string }) {  
+    await SavePaymentHandler(paymentId, status);
     return (
         <div className="text-white bg-gray-950 shadow-sm rounded-lg max-w-3xl mx-auto p-6">
             <h2 className="text-2xl font-bold">Pago {status}</h2>
@@ -17,7 +19,7 @@ export default async function EstadoPago({ paymentId, status }: { paymentId: str
                 </div>    
             </div>
             <div className="flex justify-end">
-            {status==="approved" && <ButtonDeleteCart/> && <SavePaymentHandler paymentId={paymentId} status={status} />}
+            {status==="approved" && <ButtonDeleteCart/>}
             {status==="rejected" && <Button><Link href="/carrito">go back</Link></Button>}
             </div>
         </div>

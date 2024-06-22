@@ -7,6 +7,7 @@ import Image from "next/image";
 
 import Payment from "./payment";
 import { Suspense } from "react";
+import { ItemCartSkeleton } from "./skeletons";
 
 async function CartItem({ producto }: { producto: Producto }) {
   if (producto === undefined) { 
@@ -97,7 +98,7 @@ export default async function Carrito() {
           Continue Shopping
         </Link>
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<ItemCartSkeleton/>}>
       <Carro/>
       </Suspense>
     </div>

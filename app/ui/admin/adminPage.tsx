@@ -1,9 +1,10 @@
-import { totalMovies, totalSeries} from "@/app/lib/dataAdmin";
+import { totalMovies, totalSeries, getLastTransactions, getTotalTransactions} from "@/app/lib/dataAdmin";
 
 export async function AdminPage() {
   const countSeries = await totalSeries();
   const countMovies = await totalMovies();
-
+  const transactions = await getLastTransactions();
+  const countTransactions = await getTotalTransactions();
   return (
       <div className="flex flex-col min-h-screen text-white">
         <main className="flex-1 py-8 px-6">
@@ -25,7 +26,7 @@ export async function AdminPage() {
             <div className="bg-gray-950 rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Total Transactions</h2>
-                <span className="text-2xl font-bold">1,234</span>
+                <span className="text-2xl font-bold">{countTransactions}</span>
               </div>
               <p className="text-gray-400">This is the total number of transactions in your library.</p>
             </div>
@@ -36,41 +37,22 @@ export async function AdminPage() {
                   <thead>
                     <tr className="bg-[#0f1629] text-left">
                       <th className="px-4 py-2">ID</th>
-                      <th className="px-4 py-2">User</th>
-                      <th className="px-4 py-2">Item</th>
+                      <th className="px-4 py-2">User Email</th>
+                      <th className="px-4 py-2">Status</th>
                       <th className="px-4 py-2">Amount</th>
                       <th className="px-4 py-2">Date</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b border-[#0f1629]">
-                      <td className="px-4 py-2">1</td>
-                      <td className="px-4 py-2">John Doe</td>
-                      <td className="px-4 py-2">The Godfather</td>
-                      <td className="px-4 py-2">$9.99</td>
-                      <td className="px-4 py-2">2023-04-15</td>
+                    {transactions.map((transaction) => (
+                    <tr key={transaction.id} className="border-b border-[#0f1629]">
+                      <td className="px-4 py-2">{transaction.id}</td>
+                      <td className="px-4 py-2">{transaction.payer_email}</td>
+                      <td className="px-4 py-2">{transaction.status}</td>
+                      <td className="px-4 py-2">{transaction.amount}</td>
+                      <td className="px-4 py-2">{transaction.date}</td>
                     </tr>
-                    <tr className="border-b border-[#0f1629]">
-                      <td className="px-4 py-2">2</td>
-                      <td className="px-4 py-2">Jane Smith</td>
-                      <td className="px-4 py-2">Breaking Bad</td>
-                      <td className="px-4 py-2">$19.99</td>
-                      <td className="px-4 py-2">2023-04-12</td>
-                    </tr>
-                    <tr className="border-b border-[#0f1629]">
-                      <td className="px-4 py-2">3</td>
-                      <td className="px-4 py-2">Bob Johnson</td>
-                      <td className="px-4 py-2">Game of Thrones</td>
-                      <td className="px-4 py-2">$14.99</td>
-                      <td className="px-4 py-2">2023-04-10</td>
-                    </tr>
-                    <tr className="border-b border-[#0f1629]">
-                      <td className="px-4 py-2">4</td>
-                      <td className="px-4 py-2">Sarah Lee</td>
-                      <td className="px-4 py-2">The Office</td>
-                      <td className="px-4 py-2">$9.99</td>
-                      <td className="px-4 py-2">2023-04-08</td>
-                    </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

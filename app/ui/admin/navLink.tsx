@@ -26,7 +26,7 @@ export default function NavLink() {
                         <Link className="hover:text-[#4b6bfb] transition-colors" href="/admin/series">
                             Series
                         </Link>
-                        <Link className="hover:text-[#4b6bfb] transition-colors" href="#">
+                        <Link className="hover:text-[#4b6bfb] transition-colors" href="/admin/transactions">
                             Transactions
                         </Link>
                         <Link className="hover:text-[#4b6bfb] transition-colors" href="/admin/addMovie">
