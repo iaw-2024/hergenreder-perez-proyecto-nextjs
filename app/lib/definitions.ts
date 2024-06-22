@@ -24,7 +24,8 @@ export type Producto = {
       id: number;
       status: string;
       payer: {
-        id: number;
+        id: string;
         email: string;
       }
+      transaction_amount: number;
   };

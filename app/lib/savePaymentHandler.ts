@@ -16,12 +16,13 @@ const fetchAndSavePaymentInfo = async (paymentId: any) => {
     console.log(paymentInfo); 
 
     const formattedPaymentInfo: Payment = {
-        id: paymentInfo.id ?? 0, 
+        id: paymentInfo.id ?? 0,
         status: paymentInfo.status ?? 'unknown',  
         payer: {
-          id: paymentInfo.payer?.id ?? 0, 
+          id: paymentInfo.payer?.id ?? 'unknown', 
           email: paymentInfo.payer?.email ?? 'unknown@example.com',  
         },
+        transaction_amount: paymentInfo.transaction_amount ?? 0
       };
 
     await savePaymentData(formattedPaymentInfo);
