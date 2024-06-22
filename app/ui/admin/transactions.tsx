@@ -14,19 +14,19 @@ export default function Transactions({
   const [expandedTransactionId, setExpandedTransactionId] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<QueryResultRow[] | null>(null);
 
-  const fetchTransactions = async () => {
-    try {
-      const transactionsData = await getTransactions(currentPage);
-      setTransactions(transactionsData);
-    } catch (error) {
-      console.error("Error fetching transactions:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const transactionsData = await getTransactions(currentPage);
+        setTransactions(transactionsData);
+      } catch (error) {
+        console.error("Error fetching transactions:", error);
+      }
+    };
+
     fetchTransactions();
   }, [currentPage]);
-
+  
   const toggleTransactionDetails = async (id: string) => {
     try {
       if (expandedTransactionId === id) {
@@ -72,7 +72,7 @@ export default function Transactions({
                </div>
              </div>
              {expandedItems.map((item) => (
-                 <div className="col-span-3">
+                 <div key={item.iditem} className="col-span-3">
                   <div className="grid grid-cols-3">
                    <div className="px-4 text-left">{item.title}</div>
                    <div className="px-4 text-left">{item.iditem}</div>
