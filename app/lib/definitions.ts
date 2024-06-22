@@ -21,10 +21,10 @@ export type Producto = {
   };
 
   export type Payment = {
-      id: number,
-      status: string,
+      id: number;
+      status: string;
       payer: {
-        id: number,
-        email: string
+        id: number;
+        email: string;
       }
-    }
+  };

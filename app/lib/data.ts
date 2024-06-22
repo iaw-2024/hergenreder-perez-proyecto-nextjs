@@ -46,3 +46,14 @@ export async function listaEnCarrito() {
       return Number(await getPrice(producto));
     })
   }  
+
+
+import { Payment } from './definitions';
+
+export async function savePaymentData(paymentInfo: Payment) {
+  try {
+    console.log('Payment information saved successfully:', paymentInfo);
+  } catch (error) {
+    console.error('Error saving payment information:', error);
+  }
+}

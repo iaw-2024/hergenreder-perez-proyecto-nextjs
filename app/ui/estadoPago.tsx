@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button, ButtonDeleteCart } from "./button";
+import SavePaymentHandler from "../lib/savePaymentHandler";
 
 export default async function EstadoPago({ paymentId, status }: { paymentId: string, status: string }) {
 
@@ -19,6 +20,7 @@ export default async function EstadoPago({ paymentId, status }: { paymentId: str
             {status==="approved" && <ButtonDeleteCart/>}
             {status==="rejected" && <Button><Link href="/carrito">go back</Link></Button>}
             </div>
+            {status === 'approved' && <SavePaymentHandler paymentId={paymentId} status={status} />}
         </div>
     )
 }
