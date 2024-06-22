@@ -1,5 +1,6 @@
+"use server"
 import { MercadoPagoConfig, Payment as MercadoPagoPayment } from 'mercadopago';
-import { Payment, Producto } from './definitions';
+import { Payment } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
 import { sql } from '@vercel/postgres';
   
@@ -71,7 +72,6 @@ async function getPaymentInfo(paymentId: string) {
 };
 
 export default async function SavePaymentHandler (paymentId : string, status:string) {
-
     if (status === 'approved') {
       const formData:Payment|null = await getPaymentInfo(paymentId);
       await insertTransactions(formData);
