@@ -57,7 +57,7 @@ export async function Carro() {
     return total + valor;
   }, Promise.resolve(0)) : 0;
 
-  if(data === null || data == undefined) return (
+  if(data === null || data == undefined || suma===0) return (
       <div className="space-y-4">
         <div className="text-gray-500">No agregaste nada al carrito!!!</div>
       </div>
