@@ -17,10 +17,9 @@ export default async function EstadoPago({ paymentId, status }: { paymentId: str
                 </div>    
             </div>
             <div className="flex justify-end">
-            {status==="approved" && <ButtonDeleteCart/>}
+            {status==="approved" && <ButtonDeleteCart/> && <SavePaymentHandler paymentId={paymentId} status={status} />}
             {status==="rejected" && <Button><Link href="/carrito">go back</Link></Button>}
             </div>
-            {status === 'approved' && <SavePaymentHandler paymentId={paymentId} status={status} />}
         </div>
     )
 }

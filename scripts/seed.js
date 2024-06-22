@@ -6,6 +6,7 @@ const {
     peliculas,
     series,
     users,
+    transactions,
 } = require('../app/lib/placeholder-data.js');
   
   async function crearTablaProducto(client) {
@@ -40,6 +41,7 @@ const {
     }   
 
   }
+
   async function seedProductos(client) {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -171,12 +173,47 @@ async function seedUsers(client) {
     }
   }
 
+  async function crearTablaTransacciones(client) {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    try {
+        const createTable = await client.sql`
+        CREATE TABLE IF NOT EXISTS transactions (
+          id INT PRIMARY KEY,   
+          status VARCHAR(255) NOT NULL,
+          payer_id VARCHAR(255) NOT NULL,
+          payer_email VARCHAR(255) NOT NULL,
+          amount INT NOT NULL
+        );`;
+        console.log(`Created "transactions" table`);
+
+        return{
+            createTable
+        };
+
+    } catch (error) {
+        console.error('Database Error:', error);
+    }   
+
+  }
+
+  //agregamos una transaccion de ejemplo a la tabla
+  async function seedTransactions(client){
+
+    return client.sql`
+        INSERT INTO transactions (id, status, payer_id, payer_email, amount)
+        VALUES (1, 'approved', 12, first@email.com, 20);
+       `;
+  }
+
 async function main() {
     const client = await db.connect();
     
     await crearTablaProducto(client);
     await seedProductos(client);
     await seedUsers(client);
+    await crearTablaTransacciones(client);
+    await seedTransactions(client);
     await client.end();
   }
   

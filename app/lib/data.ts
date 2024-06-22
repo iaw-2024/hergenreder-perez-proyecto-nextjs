@@ -2,7 +2,7 @@
 import { cookies } from 'next/headers'
 import { sql } from '@vercel/postgres';
 import { fetchUnProducto } from './dataProductos';
-
+import { Payment } from './definitions';
 
 export async function obtenerProductos(listaProducto:RegExpMatchArray){
   try{
@@ -46,9 +46,6 @@ export async function listaEnCarrito() {
       return Number(await getPrice(producto));
     })
   }  
-
-
-import { Payment } from './definitions';
 
 export async function savePaymentData(paymentInfo: Payment) {
   try {
