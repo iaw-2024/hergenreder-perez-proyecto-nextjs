@@ -48,7 +48,9 @@ export default function Transactions({
         <thead>
           <tr className="gap-4 px-6 text-gray-300">
             <th className="text-left px-4">Date</th>
+            <th className="text-left px-4">Email</th>
             <th className="text-left px-4">Id</th>
+            <th className="text-left px-4">Status</th>
             <th className="text-right px-4">Total</th>
             <th className="text-right px-4">Items</th>
           </tr>
@@ -58,7 +60,9 @@ export default function Transactions({
             <React.Fragment key={transaction.id}>
               <tr className="gap-4 text-white">
                 <td className="text-left px-4">{new Date(transaction.date).toLocaleDateString()}</td>
+                <td className="text-left px-4">{transaction.payer_email}</td>
                 <td className="text-left px-4">{transaction.id}</td>
+                <td className="text-left px-4">{transaction.status}</td>
                 <td className="text-right px-4">${transaction.amount}</td>
                 <td className="flex justify-end px-4">
                   <Button onClick={() => toggleTransactionDetails(transaction.id)}>
@@ -67,8 +71,8 @@ export default function Transactions({
                 </td>
               </tr>
               {expandedTransactionId === transaction.id && expandedItems !== null && (
-                <tr className="bg-gray-900 rounded-lg ">
-                  <td colSpan={4}>
+                <tr className="bg-gray-900 rounded-lg">
+                  <td colSpan={6}>
                     <table className="min-w-full bg-gray-900">
                       <thead>
                         <tr className="gap-4 p-4 text-gray-300">
