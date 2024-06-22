@@ -43,50 +43,58 @@ export default function Transactions({
   };
 
   return (
-    <div className="w-full overflow-x-auto">
-    <div className="bg-white shadow-md rounded">
-      <div className="grid grid-cols-4 gap-4 px-6 bg-gray-950 text-gray-300">
-        <div className="text-left">Date</div>
-        <div className="text-left">Id</div>
-        <div className="text-right">Total</div>
-        <div className="text-right">Items</div>
-      </div>
-      <div className="divide-y divide-gray-200 bg-gray-950">
-        {transactions.map((transaction) => (
-          <div key={transaction.id} className="flex flex-col">
-            <div className="flex flex-row items-center justify-between px-6 py-3">
-              <div className="text-left ">{new Date(transaction.date).toLocaleDateString()}</div>
-              <div className="text-left ">{transaction.id}</div>
-              <div className="text-right">${transaction.amount}</div>
-              <Button onClick={() => toggleTransactionDetails(transaction.id)} >
-                <ChevronDownIcon />
-              </Button>
-            </div>
-            {expandedTransactionId === transaction.id && expandedItems !== null && (
-             <div className="grid grid-cols-3 gap-4 p-4 bg-gray-900 rounded-lg">
-             <div className="col-span-3">
-               <div className="grid grid-cols-3 text-gray-300">
-                 <div className="px-4 text-left">Item</div>
-                 <div className="px-4 text-left">IdItem</div>
-                 <div className="px-4 text-right">Price</div>
-               </div>
-             </div>
-             {expandedItems.map((item) => (
-                 <div key={item.iditem} className="col-span-3">
-                  <div className="grid grid-cols-3">
-                   <div className="px-4 text-left">{item.title}</div>
-                   <div className="px-4 text-left">{item.iditem}</div>
-                   <div className="px-4 text-right">${item.unit_price}</div>
-                   </div>
-                 </div>
-             ))}
-           </div>
-            )}
-          </div>
-        ))}
-      </div>
+  <div className="w-full overflow-x-auto bg-white rounded">
+      <table className="w-full table-auto bg-gray-950">
+        <thead>
+          <tr className="gap-4 px-6 text-gray-300">
+            <th className="text-left px-4">Date</th>
+            <th className="text-left px-4">Id</th>
+            <th className="text-right px-4">Total</th>
+            <th className="text-right px-4">Items</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200 bg-gray-950">
+          {transactions.map((transaction) => (
+            <React.Fragment key={transaction.id}>
+              <tr className="gap-4 text-white">
+                <td className="text-left px-4">{new Date(transaction.date).toLocaleDateString()}</td>
+                <td className="text-left px-4">{transaction.id}</td>
+                <td className="text-right px-4">${transaction.amount}</td>
+                <td className="flex justify-end px-4">
+                  <Button onClick={() => toggleTransactionDetails(transaction.id)}>
+                    <ChevronDownIcon />
+                  </Button>
+                </td>
+              </tr>
+              {expandedTransactionId === transaction.id && expandedItems !== null && (
+                <tr className="bg-gray-900 rounded-lg ">
+                  <td colSpan={4}>
+                    <table className="min-w-full bg-gray-900">
+                      <thead>
+                        <tr className="gap-4 p-4 text-gray-300">
+                          <th className="px-4 text-left">Item</th>
+                          <th className="px-4 text-left">IdItem</th>
+                          <th className="px-4 text-right">Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {expandedItems.map((item) => (
+                          <tr key={item.iditem} className="gap-4 text-white">
+                            <td className="px-4 text-left">{item.title}</td>
+                            <td className="px-4 text-left">{item.iditem}</td>
+                            <td className="px-4 text-right">${item.unit_price}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              )}
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
     </div>
-  </div>
   )
 }
 
