@@ -1,7 +1,7 @@
 'use server'
 
 import { sql } from '@vercel/postgres';
-import { Producto } from "./definitions"
+import { Producto, RatingData } from "./definitions"
 import { unstable_noStore as noStore } from 'next/cache';
 
 export async function fetchProductos(type: string) {
@@ -160,4 +160,13 @@ export async function fetchFilteredProductos(
         console.error('Database Error:', error);
         throw new Error('Failed to fetch peliculas for page.');
     }
+}
+
+
+export async function fetchRating(title: string) {
+    var key="6d7434b2";
+    var url="http://www.omdbapi.com/?apikey="+key+"&t="+title;
+    const response = await (await fetch(url)).json();
+    const rating: RatingData[] = (await response.Ratings);
+    return rating;
 }

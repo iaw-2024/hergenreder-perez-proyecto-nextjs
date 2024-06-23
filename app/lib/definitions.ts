@@ -34,3 +34,8 @@ export type Producto = {
         unit_price: number
       }[]
   };
+
+ export  interface RatingData {
+    Source: string,
+    Value: string
+};

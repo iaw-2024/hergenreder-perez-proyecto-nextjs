@@ -1,23 +1,15 @@
 import { ButtonAddProducto } from "@/app/ui/button"
 import Image from "next/image"
 import { Producto } from "../lib/definitions"
+import { fetchRating } from "../lib/dataProductos";
 
 interface InfoProductoTitle {
     data: Producto
 }
 
-interface RatingData {
-    Source: string,
-    Value: string
-}
-
 
 export default async function InfoProducto({ data }: InfoProductoTitle){
-        var key="6d7434b2";
-        var url="http://www.omdbapi.com/?apikey="+key+"&t="+data.title;
-        console.log('Fetching serie data...');
-        const response = await (await fetch(url)).json();
-        const rating: RatingData[] = (await response.Ratings);
+         const rating = await fetchRating(data?.title);
        
         return (
             <>
@@ -65,7 +57,7 @@ export default async function InfoProducto({ data }: InfoProductoTitle){
                                 {data?.actors}{"\n                    "}
                             </li>
                             <li>
-                            {rating.length > 0 && <span className="font-medium">Ratings: </span> }
+                            {rating?.length > 0 && <span className="font-medium">Ratings: </span> }
                             <ul>
                                 {
                                 rating?.map((rating) => (
