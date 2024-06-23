@@ -67,7 +67,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
                 className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
                 id="year"
                 name="year"
-                type="number"
+                type="text"
                 defaultValue={movieData.year}
               />
             </div>

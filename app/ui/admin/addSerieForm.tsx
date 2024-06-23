@@ -12,7 +12,7 @@ export default function AddSerieForm() {
     type: "serie",
     title: "",
     plot: "",
-    year: 0,
+    year: "",
     poster: "",
     runtime: "",
     genere: "",

@@ -11,7 +11,7 @@ export default function AddMovieForm() {
         type: "pelicula",
         title: "",
         plot: "",
-        year: 0,
+        year: "",
         poster: "",
         runtime: "",
         genere: "",
