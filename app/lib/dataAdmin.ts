@@ -238,7 +238,7 @@ export async function getLastTransactions() {
     }
 }
 
-const TRANSACTIONS_PER_PAGE = 5;
+const TRANSACTIONS_PER_PAGE = 8;
 export async function getTransactions( currentPage: number) {
   noStore();
     const offset = (currentPage - 1) * TRANSACTIONS_PER_PAGE;

@@ -48,10 +48,10 @@ export default function Transactions({
         <thead>
           <tr className="gap-4 px-6 text-gray-300">
             <th className="text-left px-4">Date</th>
-            <th className="text-left px-4">Email</th>
-            <th className="text-left px-4">Id</th>
+            <th className="text-left px-4">User Email</th>
             <th className="text-left px-4">Status</th>
-            <th className="text-right px-4">Total</th>
+            <th className="text-left px-4">Id</th>
+            <th className="text-right px-4">Amount</th>
             <th className="text-right px-4">Items</th>
           </tr>
         </thead>
@@ -61,8 +61,8 @@ export default function Transactions({
               <tr className="gap-4 text-white">
                 <td className="text-left px-4">{new Date(transaction.date).toLocaleDateString()}</td>
                 <td className="text-left px-4">{transaction.payer_email}</td>
-                <td className="text-left px-4">{transaction.id}</td>
                 <td className="text-left px-4">{transaction.status}</td>
+                <td className="text-left px-4">{transaction.id}</td>
                 <td className="text-right px-4">${transaction.amount}</td>
                 <td className="flex justify-end px-4">
                   <Button onClick={() => toggleTransactionDetails(transaction.id)}>
