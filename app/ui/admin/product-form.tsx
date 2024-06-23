@@ -23,7 +23,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
     const finalData:Producto = {
       ...movieData,
       ...data,
-      year: Number(data.year),
+      year: String(data.year),
       price: Number(data.price),
       disable: data.disable === 'true',
       totalseasons: data.totalseasons ? Number(data.totalseasons) : 0,

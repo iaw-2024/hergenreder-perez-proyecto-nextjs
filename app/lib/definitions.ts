@@ -2,7 +2,7 @@ export type Producto = {
     id: string;
     type : "serie" | "pelicula";
     title: string;
-    year: number;
+    year: string;
     poster: string;
     plot: string;
     runtime: string;
