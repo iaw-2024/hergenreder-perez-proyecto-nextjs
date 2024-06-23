@@ -15,7 +15,7 @@ export default async function Page({
 
     return (
         <>
-            <div className="w-3/4 mx-auto text-white bg-gray-950 rounded-lg p-6">
+            <div className="xl:w-3/4 mx-auto text-white bg-gray-950 rounded-lg p-6 w-full">
             <Suspense fallback={<>loading...</>}>
                 <Transactions currentPage={currentPage}/>
             </Suspense>
