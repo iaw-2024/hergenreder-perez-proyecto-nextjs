@@ -3,7 +3,7 @@ import Link from "next/link"
 export function Footer() {
   return (
     <footer className="bg-gray-900 text-white py-12 md:py-16 inset-0 bg-gradient-to-t from-black/80 to-transparent">
-      <div className="hidden md:grid container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-400">
+      <div className="hidden md:grid container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-400">
         <div>
           <h3 className="text-xl font-bold mb-4 text-white">Movie Store</h3>
           <p className=" mb-6">
@@ -27,42 +27,28 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold mb-4 text-black dark:text-white">Contact Us</h3>
+          <h3 className="text-xl font-bold mb-4 dark:text-white">Contacto</h3>
           <div className="space-y-2">
             <div className="flex items-center space-x-2 ">
               <MailIcon/>
               <a className=" hover:text-white" href="#">
-                info@acme.com
+                Email: info@peliculasar.com
               </a>
             </div>
             <div className="flex items-center space-x-2">
               <PhoneIcon/>
               <a className="hover:text-white" href="#">
-                +1 (234) 567-890
+                Teléfono: +54 11 1234-5678
               </a>
             </div>
             <div className="flex items-center space-x-2">
               <LocateIcon/>
-              <span >123 Main St, Anytown USA</span>
+              <span >Bahía Blanca, Buenos Aires, Argentina.</span>
             </div>
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold mb-4 text-white">Quick Links</h3>
-          <div className="space-y-2 space-x-2 ">
-            <Link className="hover:text-white" href="#">
-              Home
-            </Link>
-            <Link className="hover:text-white" href="#">
-              About
-            </Link>
-            <Link className="hover:text-white" href="#">
-              Services
-            </Link>
-            <Link className="hover:text-white" href="#">
-              Contact
-            </Link>
-          </div>
+
         </div>
       </div>
 
@@ -85,19 +71,7 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold mb-4 text-white">Contact Us</h3>
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2">
-            <MailIcon/>
-              <a className="hover:text-white" href="#">
-              Email: info@peliculasar.com
-              </a>
-            </div>
-            <div className="flex items-center space-x-2">
-              <LocateIcon/>
-              <span>Teléfono: +54 11 1234-5678</span>
-            </div>
-          </div>
+
         </div>
         <div>
           <h3 className="text-xl font-bold mb-4 text-white">Redes Sociales:</h3>
@@ -115,7 +89,7 @@ export function Footer() {
         </div>
       </div>
       <div className="mt-8 border-t border-gray-800 pt-8 text-center text-gray-400">
-        © 2024 Movie Store. No tenemos derechs sobre estas películas.
+        © 2024 Movie Store. No tenemos derechos sobre estas películas.
       </div>
     </footer>
   )
