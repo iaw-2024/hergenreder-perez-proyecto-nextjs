@@ -28,9 +28,9 @@ export async function POST(request: NextRequest) {
       body:{
          items: items,
          back_urls: {
-          success: 'hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app/carrito/pago',
-          failure: 'hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app/carrito/pago',
-          pending: 'hergenreder-perez-proyecto-nextjs-git-entrega-hergenreder-perez.vercel.app/carrito/pago'
+          success: 'hergenreder-perez-proyecto-nextjs.vercel.app/carrito/pago',
+          failure: 'hergenreder-perez-proyecto-nextjs.vercel.app/carrito/pago',
+          pending: 'hergenreder-perez-proyecto-nextjs.vercel.app/carrito/pago'
         },
         purpose: 'wallet_purchase',
         auto_return: 'approved'
