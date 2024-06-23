@@ -88,13 +88,7 @@ export function Footer() {
           <h3 className="text-xl font-bold mb-4 text-white">Contact Us</h3>
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
-              <MailIcon/>
-              <a className="hover:text-white" href="#">
-                info@acme.com
-              </a>
-            </div>
-            <div className="flex items-center space-x-2">
-              <PhoneIcon/>
+            <MailIcon/>
               <a className="hover:text-white" href="#">
               Email: info@peliculasar.com
               </a>
