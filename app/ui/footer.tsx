@@ -5,10 +5,11 @@ export function Footer() {
     <footer className="bg-gray-900 text-white py-12 md:py-16 inset-0 bg-gradient-to-t from-black/80 to-transparent">
       <div className="hidden md:grid container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-400">
         <div>
-          <h3 className="text-xl font-bold mb-4 text-white">Acme Inc.</h3>
+          <h3 className="text-xl font-bold mb-4 text-white">Movie Store</h3>
           <p className=" mb-6">
-            Acme Inc. is a leading provider of innovative technology solutions. We are dedicated to helping our clients
-            achieve their goals through cutting-edge products and exceptional service.
+            Store desarrollada por Ezequiel Perez y Tomás Hergenreder para Ingeniería de Aplicaciones Web.
+            Entrega Final.
+            Esta tienda es trucha no compren acá.
           </p>
           <div className="flex space-x-4">
             <a className="hover:text-white" href="#">
@@ -95,35 +96,32 @@ export function Footer() {
             <div className="flex items-center space-x-2">
               <PhoneIcon/>
               <a className="hover:text-white" href="#">
-                +1 (234) 567-890
+              Email: info@peliculasar.com
               </a>
             </div>
             <div className="flex items-center space-x-2">
               <LocateIcon/>
-              <span>123 Main St, Anytown USA</span>
+              <span>Teléfono: +54 11 1234-5678</span>
             </div>
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold mb-4 text-white">Quick Links</h3>
+          <h3 className="text-xl font-bold mb-4 text-white">Redes Sociales:</h3>
           <div className="space-x-2">
             <Link className="hover:text-white" href="#">
-              Home
+              Facebook: PelículasAR
             </Link>
             <Link className="hover:text-white" href="#">
-              About
+              Twitter: @PeliculasAR
             </Link>
             <Link className="hover:text-white" href="#">
-              Services
-            </Link>
-            <Link className="hover:text-white" href="#">
-              Contact
+             Instagram: @PeliculasAR
             </Link>
           </div>
         </div>
       </div>
       <div className="mt-8 border-t border-gray-800 pt-8 text-center text-gray-400">
-        © 2024 Acme Inc. All rights reserved.
+        © 2024 Movie Store. No tenemos derechs sobre estas películas.
       </div>
     </footer>
   )
