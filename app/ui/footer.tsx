@@ -9,7 +9,7 @@ export function Footer() {
           <p className=" mb-6">
             Store desarrollada por Ezequiel Perez y Tomás Hergenreder para Ingeniería de Aplicaciones Web.
             Entrega Final.
-            Esta tienda es trucha no compren acá.
+            Tienda ficticia no compren acá.
           </p>
           <div className="flex space-x-4">
             <a className="hover:text-white" href="#">
