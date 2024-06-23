@@ -5,6 +5,16 @@ import SavePaymentHandler from "../lib/savePaymentHandler";
 
 export default async function EstadoPago({ paymentId, status }: { paymentId: string, status: string }) {  
     SavePaymentHandler(paymentId, status);
+    if(status==="null"){
+        return (
+        <div className="text-gray-300 bg-gray-950 shadow-sm rounded-lg max-w-3xl mx-auto p-6">
+            <p>No se realizo el pago, vuelve al carrito!!</p>
+            <div className="flex justify-end">
+                <Button><Link href="/carrito">go back</Link></Button>
+            </div>
+        </div>
+        )
+    }
     return (
         <div className="text-white bg-gray-950 shadow-sm rounded-lg max-w-3xl mx-auto p-6">
             <h2 className="text-2xl font-bold">Pago {status}</h2>

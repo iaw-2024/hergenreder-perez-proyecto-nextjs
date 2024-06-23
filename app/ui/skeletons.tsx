@@ -124,3 +124,23 @@ export function ItemCartSkeleton() {
     
   )
 }
+
+export function EstadoPagoSkeleton(){
+  return(
+<div className="text-white bg-gray-950 shadow-sm rounded-lg max-w-3xl mx-auto p-6">
+            <div className="mt-2 h-6 w-24 rounded-md bg-gray-400 animate-pulse" />
+            <div className="flex items-center p-6">
+                <div className="text-gray-400 justify-center">
+                <div className="mt-2 h-6 w-24 rounded-md bg-gray-400 animate-pulse" />
+                    <div className="px-6">
+                      <div className="mt-2 h-6 w-20 rounded-md bg-gray-400 animate-pulse" />
+                      <div className="mt-2 h-2 w-20 rounded-md bg-gray-400 animate-pulse"/>
+                    </div>
+                </div>    
+            </div>
+            <div className="flex justify-end">
+              <div className="mt-2 h-6 w-20 rounded-md bg-red-400 animate-pulse" />
+            </div>
+        </div>
+  )
+}

@@ -73,8 +73,14 @@ async function getPaymentInfo(paymentId: string) {
 
 export default async function SavePaymentHandler (paymentId : string, status:string) {
     if (status === 'approved') {
-      const formData:Payment|null = await getPaymentInfo(paymentId);
-      await insertTransactions(formData);
-      await insertItemsTransactions(formData);
+      try{
+        const formData:Payment|null = await getPaymentInfo(paymentId);
+        if(formData!==null){
+          await insertTransactions(formData);
+          await insertItemsTransactions(formData);
+        }
+      }catch(error){
+        console.log(error);
+      }
     }
   };
